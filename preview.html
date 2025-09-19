@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 CLB Information Technologies - Preview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #8b5cf6;
+            --accent-color: #06b6d4;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-morphism-dark {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        }
+
+        .floating-animation {
+            animation: floating 6s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-10px) rotate(1deg); }
+            66% { transform: translateY(5px) rotate(-1deg); }
+        }
+
+        .page-preview {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+        }
+
+        .page-preview.active {
+            transform: scale(1);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .page-preview:not(.active) {
+            transform: scale(0.95);
+            opacity: 0;
+            visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .preview-container {
+            position: relative;
+            min-height: 500px;
+        }
+
+        .nav-tab {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-tab:hover::before {
+            left: 100%;
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .device-frame {
+            border-radius: 12px;
+            overflow: hidden;
+            background: #1e293b;
+            padding: 6px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .device-frame.mobile {
+            max-width: 360px;
+            margin: 0 auto;
+            border-radius: 28px;
+            padding: 8px;
+        }
+
+        .device-frame iframe {
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .device-frame.mobile iframe {
+            border-radius: 20px;
+            height: 600px;
+        }
+
+        .device-frame:not(.mobile) iframe {
+            height: 500px;
+        }
+
+        .feature-card {
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px) scale(1.02);
+        }
+
+        .pulse-dot {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .stats-counter {
+            animation: countUp 1.5s ease-out;
+        }
+
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success { background: #10b981; }
+        .notification.info { background: #3b82f6; }
+        .notification.warning { background: #f59e0b; }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .quick-link-card {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quick-link-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .quick-link-card:hover::after {
+            left: 100%;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        .glassmorphism-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        [data-theme="dark"] .glassmorphism-card {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <button id="themeToggle" class="p-3 rounded-full glass-morphism text-white hover:scale-110 transition-all duration-300">
+            <i class="fas fa-moon text-lg"></i>
+        </button>
+    </div>
+
+    <!-- Hero Header -->
+    <header class="gradient-bg text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-black opacity-5"></div>
+        
+        <!-- Floating Elements -->
+        <div class="absolute top-8 left-8 w-16 h-16 bg-white opacity-10 rounded-full floating-animation"></div>
+        <div class="absolute top-32 right-16 w-12 h-12 bg-white opacity-10 rounded-full floating-animation" style="animation-delay: -2s;"></div>
+        <div class="absolute bottom-16 left-1/4 w-10 h-10 bg-white opacity-10 rounded-full floating-animation" style="animation-delay: -4s;"></div>
+        
+        <div class="relative max-w-6xl mx-auto px-4 py-12" data-aos="fade-up">
+            <div class="text-center">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-white bg-opacity-20 rounded-2xl mb-4">
+                    <i class="fas fa-rocket text-3xl text-white"></i>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                    CLB Information Technologies
+                    <span class="block text-2xl md:text-3xl text-blue-200 mt-2">Live Preview System</span>
+                </h1>
+                <p class="text-lg md:text-xl text-blue-100 mb-6 max-w-2xl mx-auto">
+                    Khám phá hệ thống quản lý câu lạc bộ hiện đại với giao diện compact và tính năng đa dạng
+                </p>
+                <div class="flex flex-wrap gap-3 justify-center">
+                    <button onclick="scrollToPreview()" class="px-6 py-3 bg-white text-blue-600 rounded-xl font-semibold hover:bg-blue-50 transition transform hover:scale-105 flex items-center">
+                        <i class="fas fa-play mr-2"></i>
+                        Xem Demo
+                    </button>
+                    <a href="README.md" target="_blank" class="px-6 py-3 border-2 border-white text-white rounded-xl font-semibold hover:bg-white hover:text-blue-600 transition transform hover:scale-105 flex items-center">
+                        <i class="fas fa-book mr-2"></i>
+                        Docs
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Quick Stats -->
+    <section class="py-12 bg-var(--bg-primary)">
+        <div class="max-w-6xl mx-auto px-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="text-center glassmorphism-card rounded-xl p-4">
+                    <div class="stats-counter text-3xl md:text-4xl font-bold text-blue-600 mb-1">5</div>
+                    <div class="text-gray-600 dark:text-gray-300 text-sm font-medium">Trang Web</div>
+                </div>
+                <div class="text-center glassmorphism-card rounded-xl p-4">
+                    <div class="stats-counter text-3xl md:text-4xl font-bold text-green-600 mb-1">25+</div>
+                    <div class="text-gray-600 dark:text-gray-300 text-sm font-medium">Tính Năng</div>
+                </div>
+                <div class="text-center glassmorphism-card rounded-xl p-4">
+                    <div class="stats-counter text-3xl md:text-4xl font-bold text-purple-600 mb-1">100%</div>
+                    <div class="text-gray-600 dark:text-gray-300 text-sm font-medium">Responsive</div>
+                </div>
+                <div class="text-center glassmorphism-card rounded-xl p-4">
+                    <div class="stats-counter text-3xl md:text-4xl font-bold text-yellow-600 mb-1">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="text-gray-600 dark:text-gray-300 text-sm font-medium">Ready</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Accounts -->
+    <section class="py-10 bg-var(--bg-secondary)">
+        <div class="max-w-4xl mx-auto px-4" data-aos="fade-up" data-aos-delay="300">
+            <div class="glassmorphism-card rounded-2xl p-6">
+                <div class="text-center mb-6">
+                    <h2 class="text-2xl font-bold mb-2 flex items-center justify-center">
+                        <i class="fas fa-key text-blue-600 mr-2"></i>
+                        Demo Accounts
+                    </h2>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Thông tin đăng nhập để trải nghiệm</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="p-4 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl">
+                        <div class="flex items-center mb-3">
+                            <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white mr-3">
+                                <i class="fas fa-user-tie text-sm"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-blue-900 dark:text-blue-300 text-sm">Admin</h3>
+                                <p class="text-blue-700 dark:text-blue-400 text-xs">Quản trị viên</p>
+                            </div>
+                        </div>
+                        <div class="space-y-1 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-blue-700 dark:text-blue-400">Email:</span>
+                                <code class="bg-blue-100 dark:bg-blue-800/30 px-2 py-1 rounded text-blue-800 dark:text-blue-300">admin@clb.com</code>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-blue-700 dark:text-blue-400">Pass:</span>
+                                <code class="bg-blue-100 dark:bg-blue-800/30 px-2 py-1 rounded text-blue-800 dark:text-blue-300">password</code>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl">
+                        <div class="flex items-center mb-3">
+                            <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center text-white mr-3">
+                                <i class="fas fa-user text-sm"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-green-900 dark:text-green-300 text-sm">Member</h3>
+                                <p class="text-green-700 dark:text-green-400 text-xs">Thành viên</p>
+                            </div>
+                        </div>
+                        <div class="space-y-1 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-green-700 dark:text-green-400">Email:</span>
+                                <code class="bg-green-100 dark:bg-green-800/30 px-2 py-1 rounded text-green-800 dark:text-green-300">member@clb.com</code>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-green-700 dark:text-green-400">Pass:</span>
+                                <code class="bg-green-100 dark:bg-green-800/30 px-2 py-1 rounded text-green-800 dark:text-green-300">password</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Preview Section -->
+    <section id="preview-section" class="py-12 bg-var(--bg-primary)">
+        <div class="max-w-6xl mx-auto px-4" data-aos="fade-up" data-aos-delay="400">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-3 flex items-center justify-center">
+                    <i class="fas fa-desktop text-blue-600 mr-2"></i>
+                    Live Preview
+                </h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300">Khám phá từng trang của hệ thống</p>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="mb-6">
+                <div class="flex flex-wrap justify-center gap-2 mb-4">
+                    <div class="nav-tab active" onclick="showPage('homepage')" data-page="homepage">
+                        <div class="flex items-center px-4 py-2 rounded-xl text-white font-medium text-sm">
+                            <i class="fas fa-home mr-2"></i>
+                            <span>Trang Chủ</span>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-tab" onclick="showPage('login')" data-page="login">
+                        <div class="flex items-center px-4 py-2 glassmorphism-card rounded-xl text-gray-700 dark:text-gray-300 font-medium text-sm hover:bg-white/10">
+                            <i class="fas fa-sign-in-alt mr-2 text-green-600"></i>
+                            <span>Đăng Nhập</span>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-tab" onclick="showPage('admin')" data-page="admin">
+                        <div class="flex items-center px-4 py-2 glassmorphism-card rounded-xl text-gray-700 dark:text-gray-300 font-medium text-sm hover:bg-white/10">
+                            <i class="fas fa-tachometer-alt mr-2 text-purple-600"></i>
+                            <span>Admin</span>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-tab" onclick="showPage('member')" data-page="member">
+                        <div class="flex items-center px-4 py-2 glassmorphism-card rounded-xl text-gray-700 dark:text-gray-300 font-medium text-sm hover:bg-white/10">
+                            <i class="fas fa-user mr-2 text-yellow-600"></i>
+                            <span>Member</span>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-tab" onclick="showPage('events')" data-page="events">
+                        <div class="flex items-center px-4 py-2 glassmorphism-card rounded-xl text-gray-700 dark:text-gray-300 font-medium text-sm hover:bg-white/10">
+                            <i class="fas fa-calendar mr-2 text-red-600"></i>
+                            <span>Events</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Device Toggle -->
+                <div class="flex justify-center mb-6">
+                    <div class="glassmorphism-card rounded-xl p-1">
+                        <div class="flex space-x-1">
+                            <button id="desktop-btn" class="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium text-sm transition flex items-center" onclick="setDeviceView('desktop')">
+                                <i class="fas fa-desktop mr-1"></i>
+                                Desktop
+                            </button>
+                            <button id="mobile-btn" class="px-4 py-2 text-gray-700 dark:text-gray-300 rounded-lg font-medium text-sm transition hover:bg-white/10 flex items-center" onclick="setDeviceView('mobile')">
+                                <i class="fas fa-mobile-alt mr-1"></i>
+                                Mobile
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preview Container -->
+            <div class="preview-container glassmorphism-card rounded-2xl p-6">
+                <!-- Homepage Preview -->
+                <div id="preview-homepage" class="page-preview active">
+                    <div class="mb-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <div>
+                                <h3 class="text-xl font-bold flex items-center">
+                                    <span class="pulse-dot w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                                    Trang Chủ
+                                </h3>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm">Landing page với hero section</p>
+                            </div>
+                            <a href="index.html" target="_blank" class="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center text-sm">
+                                <i class="fas fa-external-link-alt mr-1"></i>
+                                Mở
+                            </a>
+                        </div>
+                        <div class="flex flex-wrap gap-1 mb-3">
+                            <span class="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-lg text-xs font-medium">Hero</span>
+                            <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-lg text-xs font-medium">Features</span>
+                            <span class="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded-lg text-xs font-medium">Stats</span>
+                        </div>
+                    </div>
+                    <div class="device-frame" id="homepage-frame">
+                        <iframe src="index.html" title="Trang chủ" loading="lazy"></iframe>
+                    </div>
+                </div>
+
+                <!-- Login Preview -->
+                <div id="preview-login" class="page-preview">
+                    <div class="mb-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <div>
+                                <h3 class="text-xl font-bold flex items-center">
+                                    <span class="pulse-dot w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                                    Đăng Nhập
+                                </h3>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm">Authentication với validation</p>
+                            </div>
+                            <a href="login.html" target="_blank" class="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center text-sm">
+                                <i class="fas fa-external-link-alt mr-1"></i>
+                                Mở
+                            </a>
+                        </div>
+                        <div class="flex flex-wrap gap-1 mb-3">
+                            <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-lg text-xs font-medium">Validation</span>
+                            <span class="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-lg text-xs font-medium">Demo</span>
+                            <span class="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded-lg text-xs font-medium">Modern</span>
+                        </div>
+                    </div>
+                    <div class="device-frame" id="login-frame">
+                        <iframe src="login.html" title="Đăng nhập" loading="lazy"></iframe>
+                    </div>
+                </div>
+
+                <!-- Admin Preview -->
+                <div id="preview-admin" class="page-preview">
+                    <div class="mb-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <div>
+                                <h3 class="text-xl font-bold flex items-center">
+                                    <span class="pulse-dot w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                                    Admin Dashboard
+                                </h3>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm">Panel quản trị với charts</p>
+                            </div>
+                            <a href="admin.html" target="_blank" class="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center text-sm">
+                                <i class="fas fa-external-link-alt mr-1"></i>
+                                Mở
+                            </a>
+                        </div>
+                        <div class="flex flex-wrap gap-1 mb-3">
+                            <span class="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded-lg text-xs font-medium">Charts</span>
+                            <span class="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-lg text-xs font-medium">Dashboard</span>
+                            <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-lg text-xs font-medium">Analytics</span>
+                        </div>
+                    </div>
+                    <div class="device-frame" id="admin-frame">
+                        <iframe src="admin.html" title="Admin" loading="lazy"></iframe>
+                    </div>
+                </div>
+
+                <!-- Member Preview -->
+                <div id="preview-member" class="page-preview">
+                    <div class="mb-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <div>
+                                <h3 class="text-xl font-bold flex items-center">
+                                    <span class="pulse-dot w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                                    Member Area
+                                </h3>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm">Dashboard cá nhân</p>
+                            </div>
+                            <a href="member.html" target="_blank" class="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center text-sm">
+                                <i class="fas fa-external-link-alt mr-1"></i>
+                                Mở
+                            </a>
+                        </div>
+                        <div class="flex flex-wrap gap-1 mb-3">
+                            <span class="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-lg text-xs font-medium">Profile</span>
+                            <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-lg text-xs font-medium">Activities</span>
+                            <span class="px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 rounded-lg text-xs font-medium">Skills</span>
+                        </div>
+                    </div>
+                    <div class="device-frame" id="member-frame">
+                        <iframe src="member.html" title="Member" loading="lazy"></iframe>
+                    </div>
+                </div>
+
+                <!-- Events Preview -->
+                <div id="preview-events" class="page-preview">
+                    <div class="mb-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <div>
+                                <h3 class="text-xl font-bold flex items-center">
+                                    <span class="pulse-dot w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                                    Events Page
+                                </h3>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm">Quản lý sự kiện</p>
+                            </div>
+                            <a href="events.html" target="_blank" class="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center text-sm">
+                                <i class="fas fa-external-link-alt mr-1"></i>
+                                Mở
+                            </a>
+                        </div>
+                        <div class="flex flex-wrap gap-1 mb-3">
+                            <span class="px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 rounded-lg text-xs font-medium">Events</span>
+                            <span class="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-lg text-xs font-medium">Filter</span>
+                            <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-lg text-xs font-medium">Register</span>
+                        </div>
+                    </div>
+                    <div class="device-frame" id="events-frame">
+                        <iframe src="events.html" title="Events" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-12 bg-var(--bg-secondary)">
+        <div class="max-w-6xl mx-auto px-4" data-aos="fade-up" data-aos-delay="500">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-3 flex items-center justify-center">
+                    <i class="fas fa-star text-yellow-500 mr-2"></i>
+                    Tính Năng
+                </h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300">Những điều làm nên sự khác biệt</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="feature-card glassmorphism-card p-4 rounded-xl">
+                    <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mb-3">
+                        <i class="fas fa-mobile-alt text-lg text-white"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">100% Responsive</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Hoạt động hoàn hảo trên mọi thiết bị với thiết kế mobile-first.</p>
+                </div>
+
+                <div class="feature-card glassmorphism-card p-4 rounded-xl">
+                    <div class="w-12 h-12 bg-green-600 rounded-xl flex items-center justify-center mb-3">
+                        <i class="fas fa-rocket text-lg text-white"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Performance Cao</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Tối ưu tốc độ với modern technologies và lazy loading.</p>
+                </div>
+
+                <div class="feature-card glassmorphism-card p-4 rounded-xl">
+                    <div class="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center mb-3">
+                        <i class="fas fa-palette text-lg text-white"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Modern UI/UX</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Giao diện hiện đại với Tailwind CSS và animations.</p>
+                </div>
+
+                <div class="feature-card glassmorphism-card p-4 rounded-xl">
+                    <div class="w-12 h-12 bg-yellow-600 rounded-xl flex items-center justify-center mb-3">
+                        <i class="fas fa-shield-alt text-lg text-white"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Bảo Mật</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Form validation và security best practices.</p>
+                </div>
+
+                <div class="feature-card glassmorphism-card p-4 rounded-xl">
+                    <div class="w-12 h-12 bg-red-600 rounded-xl flex items-center justify-center mb-3">
+                        <i class="fas fa-chart-line text-lg text-white"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Analytics</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Biểu đồ tương tác và data visualization.</p>
+                </div>
+
+                <div class="feature-card glassmorphism-card p-4 rounded-xl">
+                    <div class="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center mb-3">
+                        <i class="fas fa-cogs text-lg text-white"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Dễ Tùy Chỉnh</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Modular architecture và clean code structure.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Links -->
+    <section class="py-12 bg-var(--bg-primary)">
+        <div class="max-w-6xl mx-auto px-4" data-aos="fade-up" data-aos-delay="600">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-3 flex items-center justify-center">
+                    <i class="fas fa-link text-blue-600 mr-2"></i>
+                    Quick Access
+                </h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300">Truy cập nhanh vào từng trang</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <a href="index.html" target="_blank" class="quick-link-card glassmorphism-card p-4 rounded-xl hover:scale-105 transition-all duration-300">
+                    <div class="flex items-center mb-3">
+                        <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
+                            <i class="fas fa-home text-white text-sm"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-sm">Trang Chủ</h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-xs">Landing Page</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 text-xs">Hero section và features</p>
+                </a>
+
+                <a href="login.html" target="_blank" class="quick-link-card glassmorphism-card p-4 rounded-xl hover:scale-105 transition-all duration-300">
+                    <div class="flex items-center mb-3">
+                        <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center mr-3">
+                            <i class="fas fa-sign-in-alt text-white text-sm"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-sm">Đăng Nhập</h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-xs">Authentication</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 text-xs">Form validation và demo</p>
+                </a>
+
+                <a href="admin.html" target="_blank" class="quick-link-card glassmorphism-card p-4 rounded-xl hover:scale-105 transition-all duration-300">
+                    <div class="flex items-center mb-3">
+                        <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center mr-3">
+                            <i class="fas fa-tachometer-alt text-white text-sm"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-sm">Admin Panel</h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-xs">Management</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 text-xs">Dashboard và analytics</p>
+                </a>
+
+                <a href="member.html" target="_blank" class="quick-link-card glassmorphism-card p-4 rounded-xl hover:scale-105 transition-all duration-300">
+                    <div class="flex items-center mb-3">
+                        <div class="w-10 h-10 bg-yellow-600 rounded-lg flex items-center justify-center mr-3">
+                            <i class="fas fa-user text-white text-sm"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-sm">Member Area</h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-xs">Personal</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 text-xs">Profile và hoạt động</p>
+                </a>
+
+                <a href="events.html" target="_blank" class="quick-link-card glassmorphism-card p-4 rounded-xl hover:scale-105 transition-all duration-300">
+                    <div class="flex items-center mb-3">
+                        <div class="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center mr-3">
+                            <i class="fas fa-calendar text-white text-sm"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-sm">Events Page</h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-xs">Events</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 text-xs">Quản lý sự kiện</p>
+                </a>
+
+                <a href="README.md" target="_blank" class="quick-link-card glassmorphism-card p-4 rounded-xl hover:scale-105 transition-all duration-300">
+                    <div class="flex items-center mb-3">
+                        <div class="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center mr-3">
+                            <i class="fas fa-book text-white text-sm"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-sm">Documentation</h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-xs">README</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 text-xs">Hướng dẫn chi tiết</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-10 bg-var(--bg-secondary)" data-aos="fade-up" data-aos-delay="700">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center">
+                <div class="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl mb-4">
+                    <i class="fas fa-users text-lg text-white"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">CLB Management System</h3>
+                <p class="text-gray-400 dark:text-gray-300 mb-4 max-w-xl mx-auto text-sm">
+                    Hệ thống quản lý câu lạc bộ hiện đại với giao diện compact và trải nghiệm tối ưu.
+                </p>
+                <div class="flex items-center justify-center space-x-2 text-gray-400 dark:text-gray-300 text-sm">
+                    <span>Developed with</span>
+                    <i class="fas fa-heart text-red-500"></i>
+                    <span>by</span>
+                    <strong class="text-blue-600">MiniMax Agent</strong>
+                    <span>•</span>
+                    <span>September 2025</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+        <button onclick="scrollToPreview()" class="glassmorphism-card p-2 rounded-full text-white hover:scale-110 transition-all duration-300">
+            <i class="fas fa-chevron-down text-lg"></i>
+        </button>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="notification"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
+        // Particles.js Configuration
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 50, density: { enable: true, value_area: 800 } },
+                color: { value: "#3b82f6" },
+                shape: {
+                    type: "circle",
+                    stroke: { width: 0, color: "#000000" },
+                    polygon: { nb_sides: 5 }
+                },
+                opacity: {
+                    value: 0.3,
+                    random: false,
+                    anim: { enable: false, speed: 1, opacity_min: 0.1, sync: false }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: { enable: false, speed: 40, size_min: 0.1, sync: false }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#3b82f6",
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: false,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false,
+                    attract: { enable: false, rotateX: 600, rotateY: 1200 }
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "repulse" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                },
+                modes: {
+                    grab: { distance: 400, line_linked: { opacity: 1 } },
+                    bubble: { distance: 400, size: 40, duration: 2, opacity: 8, speed: 3 },
+                    repulse: { distance: 200, duration: 0.4 },
+                    push: { particles_nb: 4 },
+                    remove: { particles_nb: 2 }
+                }
+            },
+            retina_detect: true
+        });
+
+        let currentPage = 'homepage';
+        let currentDevice = 'desktop';
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        let isDark = localStorage.getItem('theme') === 'dark';
+
+        function setTheme(dark) {
+            if (dark) {
+                body.setAttribute('data-theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun text-lg"></i>';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.setAttribute('data-theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-moon text-lg"></i>';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        themeToggle.addEventListener('click', () => {
+            isDark = !isDark;
+            setTheme(isDark);
+            showNotification('Đã chuyển theme ' + (isDark ? 'tối' : 'sáng') + '!', 'success');
+        });
+
+        // Initialize theme
+        setTheme(isDark);
+
+        // Show Page Function
+        function showPage(pageName) {
+            // Hide all previews
+            document.querySelectorAll('.page-preview').forEach(preview => {
+                preview.classList.remove('active');
+            });
+            
+            // Remove active class from all nav items
+            document.querySelectorAll('.nav-tab').forEach(item => {
+                item.classList.remove('active');
+                const inner = item.querySelector('div');
+                inner.className = 'flex items-center px-4 py-2 glassmorphism-card rounded-xl text-gray-700 dark:text-gray-300 font-medium text-sm hover:bg-white/10';
+            });
+            
+            // Show selected preview
+            document.getElementById('preview-' + pageName).classList.add('active');
+            
+            // Add active class to clicked nav item
+            const activeItem = document.querySelector(`[data-page="${pageName}"]`);
+            if (activeItem) {
+                activeItem.classList.add('active');
+                const inner = activeItem.querySelector('div');
+                inner.className = 'flex items-center px-4 py-2 rounded-xl text-white font-medium text-sm';
+            }
+            
+            currentPage = pageName;
+            showNotification(`Chuyển sang trang ${pageName}`, 'info');
+        }
+
+        // Set Device View
+        function setDeviceView(device) {
+            currentDevice = device;
+            
+            const desktopBtn = document.getElementById('desktop-btn');
+            const mobileBtn = document.getElementById('mobile-btn');
+            
+            if (device === 'desktop') {
+                desktopBtn.className = 'px-4 py-2 bg-blue-600 text-white rounded-lg font-medium text-sm transition flex items-center';
+                mobileBtn.className = 'px-4 py-2 text-gray-700 dark:text-gray-300 rounded-lg font-medium text-sm transition hover:bg-white/10 flex items-center';
+            } else {
+                desktopBtn.className = 'px-4 py-2 text-gray-700 dark:text-gray-300 rounded-lg font-medium text-sm transition hover:bg-white/10 flex items-center';
+                mobileBtn.className = 'px-4 py-2 bg-blue-600 text-white rounded-lg font-medium text-sm transition flex items-center';
+            }
+            
+            // Update device frames
+            document.querySelectorAll('.device-frame').forEach(frame => {
+                if (device === 'mobile') {
+                    frame.classList.add('mobile');
+                } else {
+                    frame.classList.remove('mobile');
+                }
+            });
+
+            showNotification(`Chuyển sang view ${device}`, 'info');
+        }
+
+        // Scroll to Preview
+        function scrollToPreview() {
+            document.getElementById('preview-section').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        // Show Notification
+        function showNotification(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `notification ${type} show`;
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Initialize Stats Counter Animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stats-counter');
+            counters.forEach(counter => {
+                const target = parseInt(counter.textContent);
+                if (!isNaN(target)) {
+                    let current = 0;
+                    const increment = target / 40;
+                    const updateCounter = () => {
+                        if (current < target) {
+                            current += increment;
+                            counter.textContent = Math.ceil(current);
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            counter.textContent = target;
+                        }
+                    };
+                    updateCounter();
+                }
+            });
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            animateCounters();
+            showNotification('🎯 Preview System Ready!', 'success');
+            
+            // Hide scroll indicator when user scrolls
+            let scrolled = false;
+            window.addEventListener('scroll', () => {
+                if (!scrolled && window.scrollY > 100) {
+                    document.querySelector('.scroll-indicator').style.display = 'none';
+                    scrolled = true;
+                }
+            });
+
+            console.log('🚀 CLB Preview System Initialized!');
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

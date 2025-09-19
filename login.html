@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - Information Technologies</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <style>
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+        }
+        
+        .dark .glass-morphism {
+            background: rgba(17, 24, 39, 0.85);
+            border: 1px solid rgba(75, 85, 99, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .gradient-bg {
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c, #4facfe, #00f2fe);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .typing {
+            overflow: hidden;
+            border-right: .15em solid #667eea;
+            white-space: nowrap;
+            margin: 0 auto;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #667eea; }
+        }
+
+        .hologram {
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.5) 50%, transparent 70%);
+            background-size: 200% 200%;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% -200%; }
+            50% { background-position: 200% 200%; }
+            100% { background-position: -200% -200%; }
+        }
+
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .form-input {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .form-input:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .social-btn {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .social-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .pulse-ring {
+            content: '';
+            width: 100px;
+            height: 100px;
+            border: 5px solid rgba(102, 126, 234, 0.3);
+            border-radius: 50%;
+            position: absolute;
+            animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(0.33);
+            }
+            40%, 50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1.2);
+            }
+        }
+
+        .loading-spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid #ffffff;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .strength-meter {
+            height: 4px;
+            background: #e5e7eb;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .strength-bar {
+            height: 100%;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-password {
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-password:hover {
+            color: #667eea;
+        }
+
+        .gmail-indicator {
+            background: linear-gradient(135deg, #ea4335, #fbbc04);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+            margin-left: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gmail-indicator.show {
+            opacity: 1;
+        }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .mobile-compact {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen flex items-center justify-center p-4 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 transition-all duration-500">
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Dark Mode Toggle -->
+    <button id="darkModeToggle" class="fixed top-4 right-4 p-3 glass-morphism rounded-full text-white hover:bg-white hover:bg-opacity-20 transition-all duration-300 z-50 group">
+        <i class="fas fa-moon dark:hidden group-hover:scale-110 transition-transform"></i>
+        <i class="fas fa-sun hidden dark:block text-yellow-400 group-hover:scale-110 transition-transform"></i>
+    </button>
+
+    <div class="relative max-w-md w-full space-y-6">
+        <!-- Back to home -->
+        <div class="text-center" data-aos="fade-down">
+            <a href="index.html" class="inline-flex items-center text-white hover:text-blue-200 transition-all duration-300 glass-morphism px-4 py-2 rounded-full group">
+                <i class="fas fa-arrow-left mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                Quay về trang chủ
+            </a>
+        </div>
+
+        <!-- Login form -->
+        <div class="glass-morphism rounded-2xl shadow-2xl p-6 mobile-compact" data-aos="fade-up" data-aos-delay="200">
+            <div class="text-center mb-6">
+                <div class="flex justify-center mb-4 relative">
+                    <div class="pulse-ring"></div>
+                    <div class="floating">
+                        <i class="fas fa-users text-4xl text-white relative z-10"></i>
+                    </div>
+                </div>
+                <h2 class="text-2xl font-bold text-white mb-2 typing">CLB Information Technologies</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-blue-400 to-purple-400 mx-auto rounded-full mb-4"></div>
+                <h3 class="text-xl font-semibold text-white mb-1">Đăng nhập hệ thống</h3>
+                <p class="text-blue-100 text-sm">Sử dụng Gmail cá nhân để truy cập</p>
+            </div>
+
+            <form id="loginForm" class="space-y-4">
+                <div class="space-y-4">
+                    <div class="relative">
+                        <label for="email" class="block text-sm font-medium text-white mb-2">
+                            <i class="fab fa-google mr-2 text-red-400"></i>Gmail của bạn
+                        </label>
+                        <div class="relative">
+                            <input id="email" name="email" type="email" autocomplete="email" required
+                                class="form-input appearance-none relative block w-full px-4 py-3 pl-12 glass-morphism placeholder-blue-200 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent text-sm"
+                                placeholder="yourname@gmail.com">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <i class="fab fa-google text-red-400"></i>
+                            </div>
+                            <div class="absolute inset-y-0 right-0 pr-4 flex items-center">
+                                <i id="emailValidIcon" class="fas fa-check text-green-400 hidden"></i>
+                                <span id="gmailIndicator" class="gmail-indicator">Gmail ✓</span>
+                            </div>
+                        </div>
+                        <div id="emailError" class="hidden mt-1 text-red-300 text-xs">
+                            <i class="fas fa-exclamation-triangle mr-1"></i>
+                            Vui lòng sử dụng địa chỉ Gmail (@gmail.com)
+                        </div>
+                    </div>
+
+                    <div class="relative">
+                        <label for="password" class="block text-sm font-medium text-white mb-2">
+                            <i class="fas fa-lock mr-2"></i>Mật khẩu
+                            <span class="text-blue-300 text-xs ml-2">(Mặc định: 123)</span>
+                        </label>
+                        <div class="relative">
+                            <input id="password" name="password" type="password" autocomplete="current-password" required
+                                class="form-input appearance-none relative block w-full px-4 py-3 pl-12 pr-12 glass-morphism placeholder-blue-200 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent text-sm"
+                                placeholder="••••••••">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <i class="fas fa-lock text-blue-300"></i>
+                            </div>
+                            <div class="absolute inset-y-0 right-0 pr-4 flex items-center">
+                                <i id="togglePassword" class="fas fa-eye toggle-password text-blue-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between text-sm">
+                    <div class="flex items-center">
+                        <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                        <label for="remember-me" class="ml-2 block text-white">
+                            Ghi nhớ đăng nhập
+                        </label>
+                    </div>
+
+                    <div>
+                        <button type="button" id="forgotPassword" class="font-medium text-blue-200 hover:text-white transition-colors duration-300">
+                            Quên mật khẩu?
+                        </button>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <button type="submit" id="loginBtn" class="btn-primary group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300">
+                        <span id="loginText" class="flex items-center">
+                            <i class="fas fa-sign-in-alt mr-2 group-hover:translate-x-1 transition-transform"></i>
+                            Đăng nhập với Gmail
+                        </span>
+                        <div id="loginSpinner" class="loading-spinner hidden"></div>
+                    </button>
+
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-blue-300 opacity-50"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-2 glass-morphism text-blue-100 rounded-full">hoặc</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <button type="button" id="googleSignIn" class="social-btn w-full inline-flex justify-center py-2 px-4 rounded-xl shadow-sm text-sm font-medium text-gray-700 hover:bg-white transition-all duration-300 group">
+                            <i class="fab fa-google text-red-500 mr-2 group-hover:scale-110 transition-transform"></i>
+                            Google
+                        </button>
+                        <button type="button" class="social-btn w-full inline-flex justify-center py-2 px-4 rounded-xl shadow-sm text-sm font-medium text-gray-700 hover:bg-white transition-all duration-300 group">
+                            <i class="fab fa-facebook text-blue-600 mr-2 group-hover:scale-110 transition-transform"></i>
+                            Facebook
+                        </button>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <p class="text-sm text-blue-100">
+                        Chưa có Gmail?
+                        <a href="https://accounts.google.com/signup" target="_blank" class="font-medium text-white hover:text-blue-200 transition-colors duration-300 underline">Tạo tài khoản Gmail</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+
+        <!-- Demo credentials -->
+        <div class="glass-morphism rounded-xl p-4 text-white text-sm" data-aos="fade-up" data-aos-delay="400">
+            <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center">
+                    <i class="fas fa-info-circle mr-2 text-blue-300"></i>
+                    <span class="font-semibold">Hướng dẫn đăng nhập</span>
+                </div>
+                <button id="toggleDemo" class="text-blue-300 hover:text-white transition-colors">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
+            <div id="demoInfo" class="space-y-3">
+                <div class="glass-morphism rounded-lg p-3">
+                    <div class="flex items-center mb-2">
+                        <i class="fab fa-google text-red-400 mr-2"></i>
+                        <span class="font-medium">Cách đăng nhập:</span>
+                    </div>
+                    <div class="text-xs text-blue-200 space-y-1">
+                        <div>• Nhập Gmail cá nhân của bạn (ví dụ: nguyenvana@gmail.com)</div>
+                        <div>• Sử dụng mật khẩu mặc định: <span class="font-bold text-yellow-300">123</span></div>
+                        <div>• Hệ thống sẽ tự động nhận diện và cho phép truy cập</div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center justify-between p-3 glass-morphism rounded-lg">
+                    <div>
+                        <div class="font-medium">📧 Gmail ví dụ</div>
+                        <div class="text-xs text-blue-200">example@gmail.com / 123</div>
+                    </div>
+                    <button class="quick-login px-3 py-1 bg-blue-500 hover:bg-blue-600 rounded-lg text-xs transition-colors" data-email="example@gmail.com" data-password="123">
+                        Thử ngay
+                    </button>
+                </div>
+                
+                <div class="text-center p-2 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg">
+                    <div class="text-xs font-bold">🔑 Mật khẩu mặc định cho mọi Gmail: 123</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <div class="grid grid-cols-3 gap-3 text-center" data-aos="fade-up" data-aos-delay="600">
+            <div class="glass-morphism p-3 rounded-xl hover:scale-105 transition-transform duration-300 cursor-pointer">
+                <i class="fab fa-google text-red-400 text-lg mb-1"></i>
+                <div class="text-white text-xs">Gmail Only</div>
+            </div>
+            <div class="glass-morphism p-3 rounded-xl hover:scale-105 transition-transform duration-300 cursor-pointer">
+                <i class="fas fa-key text-yellow-300 text-lg mb-1"></i>
+                <div class="text-white text-xs">Mật khẩu: 123</div>
+            </div>
+            <div class="glass-morphism p-3 rounded-xl hover:scale-105 transition-transform duration-300 cursor-pointer">
+                <i class="fas fa-clock text-green-300 text-lg mb-1"></i>
+                <div class="text-white text-xs">Truy cập ngay</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for forgot password -->
+    <div id="forgotModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="glass-morphism rounded-2xl p-6 w-full max-w-md" data-aos="zoom-in">
+            <div class="text-center mb-4">
+                <i class="fas fa-key text-3xl text-white mb-2"></i>
+                <h3 class="text-xl font-bold text-white">Quên mật khẩu</h3>
+                <p class="text-blue-100 text-sm">Mật khẩu mặc định cho mọi Gmail là: <span class="font-bold text-yellow-300">123</span></p>
+            </div>
+            <div class="text-center">
+                <button type="button" id="closeForgot" class="py-2 px-6 bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition-all duration-300">
+                    Đã hiểu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="fixed top-4 left-4 z-50 space-y-2"></div>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Enhanced Particles.js configuration
+        if (window.particlesJS) {
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 80, density: { enable: true, value_area: 800 } },
+                    color: { value: ['#667eea', '#764ba2', '#f093fb', '#f5576c'] },
+                    shape: { type: 'circle' },
+                    opacity: { value: 0.6, random: true },
+                    size: { value: 3, random: true },
+                    line_linked: { enable: true, distance: 150, color: '#667eea', opacity: 0.4, width: 1 },
+                    move: { enable: true, speed: 6, direction: 'none', random: false, straight: false, out_mode: 'out', bounce: false }
+                },
+                interactivity: {
+                    detect_on: 'canvas',
+                    events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' }, resize: true },
+                    modes: { grab: { distance: 400, line_linked: { opacity: 1 } }, bubble: { distance: 400, size: 40, duration: 2, opacity: 8, speed: 3 }, repulse: { distance: 200, duration: 0.4 }, push: { particles_nb: 4 }, remove: { particles_nb: 2 } }
+                },
+                retina_detect: true
+            });
+        }
+
+        // Dark mode functionality
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const html = document.documentElement;
+        
+        const isDarkMode = localStorage.getItem('darkMode') === 'true';
+        if (isDarkMode) {
+            html.classList.add('dark');
+        }
+
+        darkModeToggle?.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const isDark = html.classList.contains('dark');
+            localStorage.setItem('darkMode', isDark);
+            showToast(isDark ? 'Đã bật chế độ tối' : 'Đã tắt chế độ tối', 'info');
+        });
+
+        // Enhanced Toast notification function
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `glass-morphism rounded-lg p-4 shadow-lg transform transition-all duration-300 translate-x-full opacity-0 ${
+                type === 'success' ? 'border-l-4 border-green-500' :
+                type === 'error' ? 'border-l-4 border-red-500' :
+                type === 'warning' ? 'border-l-4 border-yellow-500' :
+                'border-l-4 border-blue-500'
+            }`;
+            
+            const icon = type === 'success' ? 'fa-check-circle text-green-400' :
+                        type === 'error' ? 'fa-exclamation-circle text-red-400' :
+                        type === 'warning' ? 'fa-exclamation-triangle text-yellow-400' :
+                        'fa-info-circle text-blue-400';
+            
+            toast.innerHTML = `
+                <div class="flex items-center space-x-3">
+                    <i class="fas ${icon}"></i>
+                    <span class="text-white font-medium text-sm">${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="text-gray-300 hover:text-white ml-auto">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('toastContainer')?.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.remove('translate-x-full', 'opacity-0');
+            }, 100);
+            
+            setTimeout(() => {
+                toast.classList.add('translate-x-full', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        // Password toggle functionality
+        const togglePassword = document.getElementById('togglePassword');
+        const password = document.getElementById('password');
+
+        togglePassword?.addEventListener('click', () => {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            togglePassword.classList.toggle('fa-eye');
+            togglePassword.classList.toggle('fa-eye-slash');
+        });
+
+        // Enhanced Gmail validation
+        const email = document.getElementById('email');
+        const emailValidIcon = document.getElementById('emailValidIcon');
+        const gmailIndicator = document.getElementById('gmailIndicator');
+        const emailError = document.getElementById('emailError');
+
+        email?.addEventListener('input', () => {
+            const emailValue = email.value.toLowerCase();
+            const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue);
+            const isGmail = emailValue.endsWith('@gmail.com');
+            
+            if (isValidEmail && isGmail) {
+                emailValidIcon.classList.remove('hidden');
+                gmailIndicator.classList.add('show');
+                emailError.classList.add('hidden');
+                email.classList.remove('border-red-400');
+                email.classList.add('border-green-400');
+            } else if (isValidEmail && !isGmail) {
+                emailValidIcon.classList.add('hidden');
+                gmailIndicator.classList.remove('show');
+                emailError.classList.remove('hidden');
+                email.classList.add('border-red-400');
+                email.classList.remove('border-green-400');
+            } else {
+                emailValidIcon.classList.add('hidden');
+                gmailIndicator.classList.remove('show');
+                emailError.classList.add('hidden');
+                email.classList.remove('border-green-400', 'border-red-400');
+            }
+        });
+
+        // Quick login functionality
+        const quickLoginBtns = document.querySelectorAll('.quick-login');
+        quickLoginBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const email = btn.getAttribute('data-email');
+                const password = btn.getAttribute('data-password');
+                
+                document.getElementById('email').value = email;
+                document.getElementById('password').value = password;
+                
+                // Trigger validation
+                document.getElementById('email').dispatchEvent(new Event('input'));
+                
+                showToast('Thông tin đăng nhập đã được điền tự động', 'info');
+            });
+        });
+
+        // Demo toggle
+        const toggleDemo = document.getElementById('toggleDemo');
+        const demoInfo = document.getElementById('demoInfo');
+        let demoVisible = true;
+
+        toggleDemo?.addEventListener('click', () => {
+            demoVisible = !demoVisible;
+            if (demoVisible) {
+                demoInfo.classList.remove('hidden');
+                toggleDemo.innerHTML = '<i class="fas fa-eye"></i>';
+            } else {
+                demoInfo.classList.add('hidden');
+                toggleDemo.innerHTML = '<i class="fas fa-eye-slash"></i>';
+            }
+        });
+
+        // Forgot password modal
+        const forgotPassword = document.getElementById('forgotPassword');
+        const forgotModal = document.getElementById('forgotModal');
+        const closeForgot = document.getElementById('closeForgot');
+
+        forgotPassword?.addEventListener('click', () => {
+            forgotModal.classList.remove('hidden');
+        });
+
+        closeForgot?.addEventListener('click', () => {
+            forgotModal.classList.add('hidden');
+        });
+
+        forgotModal?.addEventListener('click', (e) => {
+            if (e.target === forgotModal) {
+                forgotModal.classList.add('hidden');
+            }
+        });
+
+        // Google Sign In simulation
+        document.getElementById('googleSignIn')?.addEventListener('click', () => {
+            showToast('Đang kết nối với Google...', 'info');
+            setTimeout(() => {
+                showToast('Vui lòng sử dụng form đăng nhập với Gmail bên trên', 'warning');
+            }, 1500);
+        });
+
+        // Enhanced Login form functionality
+        document.getElementById('loginForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value.toLowerCase();
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('loginBtn');
+            const loginText = document.getElementById('loginText');
+            const loginSpinner = document.getElementById('loginSpinner');
+            
+            // Validate Gmail
+            if (!email.endsWith('@gmail.com')) {
+                showToast('Vui lòng sử dụng địa chỉ Gmail (@gmail.com)', 'error');
+                return;
+            }
+            
+            // Validate password
+            if (password !== '123') {
+                showToast('Mật khẩu không đúng! Mật khẩu mặc định là: 123', 'error');
+                return;
+            }
+            
+            // Show loading state
+            loginText.classList.add('hidden');
+            loginSpinner.classList.remove('hidden');
+            loginBtn.disabled = true;
+            
+            // Simulate loading delay
+            setTimeout(() => {
+                // Extract name from email for personalization
+                const emailUsername = email.split('@')[0];
+                const displayName = emailUsername.charAt(0).toUpperCase() + emailUsername.slice(1);
+                
+                // Save user info
+                localStorage.setItem('userRole', 'member');
+                localStorage.setItem('userEmail', email);
+                localStorage.setItem('userName', displayName);
+                localStorage.setItem('loginTime', new Date().toISOString());
+                
+                showToast(`Đăng nhập thành công! Chào mừng ${displayName}.`, 'success');
+                
+                setTimeout(() => {
+                    window.location.href = 'member.html';
+                }, 1500);
+                
+            }, 2000);
+        });
+
+        // Add floating animation to form elements
+        document.addEventListener('DOMContentLoaded', () => {
+            showToast('Chào mừng đến với CLB Information Technologies! 🚀', 'info');
+            
+            // Add focus animations
+            const inputs = document.querySelectorAll('.form-input');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    input.parentElement.classList.add('scale-105');
+                });
+                
+                input.addEventListener('blur', () => {
+                    input.parentElement.classList.remove('scale-105');
+                });
+            });
+            
+            // Auto-fill password hint
+            const passwordInput = document.getElementById('password');
+            passwordInput.addEventListener('focus', () => {
+                if (!passwordInput.value) {
+                    setTimeout(() => {
+                        showToast('💡 Mật khẩu mặc định là: 123', 'info');
+                    }, 1000);
+                }
+            });
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Ctrl + Enter to submit form
+            if (e.ctrlKey && e.key === 'Enter') {
+                document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+            }
+            
+            // Escape to close modals
+            if (e.key === 'Escape') {
+                forgotModal.classList.add('hidden');
+            }
+            
+            // Quick fill password
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                document.getElementById('password').value = '123';
+                showToast('Đã điền mật khẩu mặc định', 'info');
+            }
+        });
+
+        // Enhanced ripple effect for buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                let ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+                this.appendChild(ripple);
+                
+                let x = e.clientX - e.target.offsetLeft;
+                let y = e.clientY - e.target.offsetTop;
+                
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Auto-focus email field
+        window.addEventListener('load', () => {
+            document.getElementById('email')?.focus();
+        });
+    </script>
+</body>
+</html>

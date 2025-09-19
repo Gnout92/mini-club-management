@@ -1,0 +1,2426 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - CLB Information Technologies</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        :root {
+            --primary: #3b82f6;
+            --secondary: #8b5cf6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1f2937;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+        }
+
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-gradient {
+            background: linear-gradient(180deg, #1e40af 0%, #1e3a8a 50%, #1e1b4b 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar-gradient::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(255,255,255,0.05) 100%);
+            pointer-events: none;
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        .card-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+        }
+        
+        .card-shadow:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: translateY(-2px);
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .nav-item {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-item:hover::before {
+            left: 100%;
+        }
+
+        .nav-item.active {
+            background: rgba(255, 255, 255, 0.2) !important;
+            color: white !important;
+        }
+
+        .floating-animation {
+            animation: floating 6s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .pulse-ring {
+            animation: pulse-ring 2s infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .notification-dot {
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
+        .modal-backdrop {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .activity-indicator {
+            position: relative;
+        }
+
+        .activity-indicator::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            border: 2px solid white;
+            animation: pulse 2s infinite;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 350px;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            animation: progressGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes progressGlow {
+            0% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.5); }
+            100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.8); }
+        }
+
+        .section-content {
+            display: none;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        .table-container {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .table-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .table-container::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 3px;
+        }
+        
+        .table-container::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        
+        .table-container::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+
+    <!-- Loading Screen -->
+    <div id="loading" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
+        <div class="text-center">
+            <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto mb-4"></div>
+            <div class="text-xl font-bold text-gray-800 mb-2">🚀 Admin Dashboard</div>
+            <p class="text-gray-600 text-sm">Đang khởi tạo hệ thống quản lý...</p>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-5 right-5 z-50 hidden">
+        <div class="bg-white border-l-4 border-green-500 rounded-lg shadow-lg p-4 max-w-sm">
+            <div class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                <div>
+                    <p class="text-sm font-medium text-gray-900">Thành công!</p>
+                    <p class="text-xs text-gray-600">Hệ thống đã sẵn sàng</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-72 sidebar-gradient shadow-2xl flex flex-col" data-aos="fade-right">
+            <!-- Logo -->
+            <div class="p-6 border-b border-blue-800 border-opacity-30">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-white bg-opacity-20 rounded-xl flex items-center justify-center mr-3 floating-animation">
+                        <i class="fas fa-code text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-white font-bold text-xl">CLB IT Admin</h1>
+                        <p class="text-blue-200 text-xs">Hệ thống quản lý toàn diện</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="flex-1 p-4 space-y-2">
+                <div class="text-blue-300 text-xs font-semibold uppercase tracking-wider mb-4">📊 TỔNG QUAN</div>
+                
+                <div onclick="showSection('dashboard')" class="nav-item flex items-center px-4 py-3 text-white bg-white bg-opacity-20 rounded-xl active">
+                    <i class="fas fa-tachometer-alt mr-3"></i>
+                    <span>Dashboard</span>
+                    <span class="ml-auto bg-green-500 text-white text-xs px-2 py-1 rounded-full notification-dot">New</span>
+                </div>
+
+                <div class="text-blue-300 text-xs font-semibold uppercase tracking-wider mb-4 mt-6">👥 QUẢN LÝ</div>
+                
+                <div onclick="showSection('members')" class="nav-item flex items-center px-4 py-3 text-blue-200 hover:text-white hover:bg-white hover:bg-opacity-10 rounded-xl">
+                    <i class="fas fa-users mr-3"></i>
+                    <span>Thành viên</span>
+                    <span class="ml-auto bg-blue-500 text-white text-xs px-2 py-1 rounded-full pulse-ring">127</span>
+                </div>
+                
+                <div onclick="showSection('events')" class="nav-item flex items-center px-4 py-3 text-blue-200 hover:text-white hover:bg-white hover:bg-opacity-10 rounded-xl">
+                    <i class="fas fa-calendar-alt mr-3"></i>
+                    <span>Sự kiện</span>
+                    <span class="ml-auto bg-green-500 text-white text-xs px-2 py-1 rounded-full">15</span>
+                </div>
+                
+                <div onclick="showSection('projects')" class="nav-item flex items-center px-4 py-3 text-blue-200 hover:text-white hover:bg-white hover:bg-opacity-10 rounded-xl">
+                    <i class="fas fa-project-diagram mr-3"></i>
+                    <span>Dự án</span>
+                    <span class="ml-auto bg-purple-500 text-white text-xs px-2 py-1 rounded-full">8</span>
+                </div>
+                
+                <div onclick="showSection('finance')" class="nav-item flex items-center px-4 py-3 text-blue-200 hover:text-white hover:bg-white hover:bg-opacity-10 rounded-xl">
+                    <i class="fas fa-chart-line mr-3"></i>
+                    <span>Tài chính</span>
+                    <span class="ml-auto bg-yellow-500 text-white text-xs px-2 py-1 rounded-full">₫</span>
+                </div>
+
+                <div onclick="showSection('communications')" class="nav-item flex items-center px-4 py-3 text-blue-200 hover:text-white hover:bg-white hover:bg-opacity-10 rounded-xl">
+                    <i class="fas fa-bullhorn mr-3"></i>
+                    <span>Truyền thông</span>
+                    <span class="ml-auto bg-pink-500 text-white text-xs px-2 py-1 rounded-full">3</span>
+                </div>
+
+                <div class="text-blue-300 text-xs font-semibold uppercase tracking-wider mb-4 mt-6">⚙️ HỆ THỐNG</div>
+                
+                <div onclick="showSection('analytics')" class="nav-item flex items-center px-4 py-3 text-blue-200 hover:text-white hover:bg-white hover:bg-opacity-10 rounded-xl">
+                    <i class="fas fa-analytics mr-3"></i>
+                    <span>Phân tích</span>
+                </div>
+                
+                <div onclick="showSection('reports')" class="nav-item flex items-center px-4 py-3 text-blue-200 hover:text-white hover:bg-white hover:bg-opacity-10 rounded-xl">
+                    <i class="fas fa-file-alt mr-3"></i>
+                    <span>Báo cáo</span>
+                </div>
+                
+                <div onclick="showSection('settings')" class="nav-item flex items-center px-4 py-3 text-blue-200 hover:text-white hover:bg-white hover:bg-opacity-10 rounded-xl">
+                    <i class="fas fa-cog mr-3"></i>
+                    <span>Cài đặt</span>
+                </div>
+            </nav>
+
+            <!-- User Profile -->
+            <div class="p-4 border-t border-blue-800 border-opacity-30">
+                <div class="flex items-center mb-3">
+                    <div class="relative activity-indicator">
+                        <img class="w-10 h-10 rounded-xl" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="User">
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-white text-sm font-medium">Nguyễn Văn An</p>
+                        <p class="text-blue-200 text-xs">Super Administrator</p>
+                    </div>
+                    <button class="ml-auto text-blue-200 hover:text-white">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+                <button class="w-full px-3 py-2 bg-white bg-opacity-10 text-white rounded-lg text-sm hover:bg-opacity-20 transition-all">
+                    <i class="fas fa-user-cog mr-2"></i>Quản lý tài khoản
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top Header -->
+            <div class="glass-morphism p-4 shadow-lg" data-aos="fade-down">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <input 
+                                type="text" 
+                                placeholder="🔍 Tìm kiếm nhanh... (Ctrl+K)" 
+                                class="w-80 pl-12 pr-4 py-3 bg-white bg-opacity-50 border-0 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
+                            >
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center">
+                                <i class="fas fa-search text-gray-500"></i>
+                            </div>
+                        </div>
+                        <div class="hidden md:flex items-center space-x-2">
+                            <span class="text-sm text-gray-600">Thời gian thực:</span>
+                            <span id="realTime" class="text-sm font-medium text-blue-600"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <!-- Notifications -->
+                        <div class="relative">
+                            <button class="p-2 text-gray-600 hover:text-blue-600 transition-colors relative">
+                                <i class="fas fa-bell text-lg"></i>
+                                <span class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center notification-dot">5</span>
+                            </button>
+                        </div>
+
+                        <!-- Messages -->
+                        <div class="relative">
+                            <button class="p-2 text-gray-600 hover:text-blue-600 transition-colors relative">
+                                <i class="fas fa-envelope text-lg"></i>
+                                <span class="absolute -top-1 -right-1 w-5 h-5 bg-green-500 text-white text-xs rounded-full flex items-center justify-center">3</span>
+                            </button>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <button onclick="openCreateModal()" class="flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg">
+                            <i class="fas fa-plus mr-2"></i>
+                            Tạo mới
+                        </button>
+                        
+                        <button onclick="exportReport()" class="flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors shadow">
+                            <i class="fas fa-download mr-2"></i>
+                            Xuất báo cáo
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Welcome Header -->
+            <div class="bg-white border-b border-gray-200 px-6 py-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-3xl font-bold gradient-text">Chào mừng trở lại, Admin! 👋</h2>
+                        <p class="text-gray-600 mt-1">
+                            Hôm nay là <span class="font-medium">Thứ 4, 18 tháng 9, 2025</span> - 
+                            <span class="text-green-600 font-medium">Hệ thống hoạt động bình thường</span>
+                        </p>
+                    </div>
+                    <div class="hidden lg:flex items-center space-x-4">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-blue-600" id="todayEvents">3</div>
+                            <div class="text-xs text-gray-500">Sự kiện hôm nay</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-green-600" id="activeUsers">47</div>
+                            <div class="text-xs text-gray-500">Người dùng online</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-purple-600" id="totalRevenue">157M</div>
+                            <div class="text-xs text-gray-500">Doanh thu tháng</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Sections -->
+            <div class="flex-1 overflow-y-auto p-6">
+                <!-- Dashboard Section -->
+                <div id="dashboard" class="section-content active">
+                    <!-- Advanced Stats Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" data-aos="fade-up" data-aos-delay="300">
+                        <!-- Total Members -->
+                        <div class="stat-card card-shadow">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600 mb-1">Tổng thành viên</p>
+                                    <div class="flex items-baseline">
+                                        <p class="text-3xl font-bold text-gray-900 counter" data-count="186">0</p>
+                                        <span class="ml-2 text-sm text-green-600 font-medium">+15%</span>
+                                    </div>
+                                    <div class="flex items-center mt-2">
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="progress-bar h-2 rounded-full" style="width: 75%"></div>
+                                        </div>
+                                        <span class="ml-2 text-xs text-gray-500">75%</span>
+                                    </div>
+                                </div>
+                                <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center floating-animation">
+                                    <i class="fas fa-users text-white text-2xl"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-500">
+                                <i class="fas fa-arrow-up text-green-500 mr-1"></i>
+                                +23 thành viên mới trong tuần
+                            </p>
+                        </div>
+
+                        <!-- Active Events -->
+                        <div class="stat-card card-shadow">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600 mb-1">Sự kiện hoạt động</p>
+                                    <div class="flex items-baseline">
+                                        <p class="text-3xl font-bold text-gray-900 counter" data-count="15">0</p>
+                                        <span class="ml-2 text-sm text-blue-600 font-medium">+3</span>
+                                    </div>
+                                    <div class="flex items-center mt-2">
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="progress-bar h-2 rounded-full" style="width: 60%"></div>
+                                        </div>
+                                        <span class="ml-2 text-xs text-gray-500">60%</span>
+                                    </div>
+                                </div>
+                                <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center floating-animation">
+                                    <i class="fas fa-calendar-check text-white text-2xl"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-500">
+                                <i class="fas fa-clock text-blue-500 mr-1"></i>
+                                5 sự kiện sắp diễn ra tuần này
+                            </p>
+                        </div>
+
+                        <!-- Revenue -->
+                        <div class="stat-card card-shadow">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600 mb-1">Doanh thu tháng</p>
+                                    <div class="flex items-baseline">
+                                        <p class="text-3xl font-bold text-gray-900 counter" data-count="157">0</p>
+                                        <span class="text-lg font-medium text-gray-700 ml-1">M</span>
+                                        <span class="ml-2 text-sm text-green-600 font-medium">+12%</span>
+                                    </div>
+                                    <div class="flex items-center mt-2">
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="progress-bar h-2 rounded-full" style="width: 85%"></div>
+                                        </div>
+                                        <span class="ml-2 text-xs text-gray-500">85%</span>
+                                    </div>
+                                </div>
+                                <div class="w-16 h-16 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-2xl flex items-center justify-center floating-animation">
+                                    <i class="fas fa-coins text-white text-2xl"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-500">
+                                <i class="fas fa-trending-up text-green-500 mr-1"></i>
+                                Tăng 18M so với tháng trước
+                            </p>
+                        </div>
+
+                        <!-- Engagement Rate -->
+                        <div class="stat-card card-shadow">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600 mb-1">Tỷ lệ tương tác</p>
+                                    <div class="flex items-baseline">
+                                        <p class="text-3xl font-bold text-gray-900 counter" data-count="94">0</p>
+                                        <span class="text-lg font-medium text-gray-700 ml-1">%</span>
+                                        <span class="ml-2 text-sm text-green-600 font-medium">+7%</span>
+                                    </div>
+                                    <div class="flex items-center mt-2">
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="progress-bar h-2 rounded-full" style="width: 94%"></div>
+                                        </div>
+                                        <span class="ml-2 text-xs text-gray-500">Xuất sắc</span>
+                                    </div>
+                                </div>
+                                <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center floating-animation">
+                                    <i class="fas fa-heart text-white text-2xl"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-500">
+                                <i class="fas fa-thumbs-up text-green-500 mr-1"></i>
+                                Mức độ hài lòng cao nhất từ trước tới nay
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Main Dashboard Grid -->
+                    <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+                        <!-- Left Column - Charts & Analytics -->
+                        <div class="xl:col-span-2 space-y-8">
+                            <!-- Advanced Analytics Chart -->
+                            <div class="glass-morphism p-6 rounded-2xl card-shadow" data-aos="fade-up" data-aos-delay="400">
+                                <div class="flex items-center justify-between mb-6">
+                                    <div>
+                                        <h3 class="text-2xl font-bold text-gray-900">📈 Thống kê toàn diện</h3>
+                                        <p class="text-gray-600">Phân tích xu hướng hoạt động 6 tháng qua</p>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <button class="px-4 py-2 bg-blue-100 text-blue-600 rounded-xl text-sm font-medium hover:bg-blue-200 transition-colors">
+                                            6 tháng
+                                        </button>
+                                        <button class="px-4 py-2 text-gray-500 hover:bg-gray-100 rounded-xl text-sm font-medium transition-colors">
+                                            1 năm
+                                        </button>
+                                        <button class="px-4 py-2 text-gray-500 hover:bg-gray-100 rounded-xl text-sm font-medium transition-colors">
+                                            Tất cả
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Chart Tabs -->
+                                <div class="flex space-x-1 mb-6 bg-gray-100 rounded-xl p-1">
+                                    <button class="flex-1 px-4 py-2 bg-white rounded-lg text-sm font-medium text-blue-600 shadow">
+                                        Thành viên
+                                    </button>
+                                    <button class="flex-1 px-4 py-2 text-gray-600 text-sm font-medium hover:bg-white hover:shadow rounded-lg transition-all">
+                                        Sự kiện
+                                    </button>
+                                    <button class="flex-1 px-4 py-2 text-gray-600 text-sm font-medium hover:bg-white hover:shadow rounded-lg transition-all">
+                                        Doanh thu
+                                    </button>
+                                    <button class="flex-1 px-4 py-2 text-gray-600 text-sm font-medium hover:bg-white hover:shadow rounded-lg transition-all">
+                                        Tương tác
+                                    </button>
+                                </div>
+                                
+                                <div class="chart-container">
+                                    <canvas id="advancedChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column - Activities & Quick Stats -->
+                        <div class="space-y-8">
+                            <!-- Real-time Activity Feed -->
+                            <div class="glass-morphism p-6 rounded-2xl card-shadow" data-aos="fade-up" data-aos-delay="500">
+                                <div class="flex items-center justify-between mb-6">
+                                    <h3 class="text-xl font-bold text-gray-900">🔥 Hoạt động mới nhất</h3>
+                                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">Xem tất cả</button>
+                                </div>
+                                
+                                <div class="space-y-4 max-h-96 overflow-y-auto">
+                                    <!-- Activity Item -->
+                                    <div class="flex items-start pb-4 border-b border-gray-100 last:border-b-0">
+                                        <div class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                                            <i class="fas fa-user-plus text-xs"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm text-gray-800"><b>Lê Minh Châu</b> đã đăng ký thành viên mới</p>
+                                            <p class="text-xs text-gray-500 mt-1">2 phút trước</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start pb-4 border-b border-gray-100 last:border-b-0">
+                                        <div class="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                                            <i class="fas fa-calendar-plus text-xs"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm text-gray-800"><b>Workshop React.js</b> đã được tạo</p>
+                                            <p class="text-xs text-gray-500 mt-1">15 phút trước</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-start pb-4 border-b border-gray-100 last:border-b-0">
+                                        <div class="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                                            <i class="fas fa-project-diagram text-xs"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm text-gray-800"><b>Dự án Website CLB</b> cập nhật progress</p>
+                                            <p class="text-xs text-gray-500 mt-1">1 giờ trước</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-start pb-4 border-b border-gray-100 last:border-b-0">
+                                        <div class="w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                                            <i class="fas fa-exclamation-triangle text-xs"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm text-gray-800"><b>Server</b> cần bảo trì định kỳ</p>
+                                            <p class="text-xs text-gray-500 mt-1">3 giờ trước</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-start pb-4 border-b border-gray-100 last:border-b-0">
+                                        <div class="w-8 h-8 bg-yellow-500 text-white rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                                            <i class="fas fa-dollar-sign text-xs"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm text-gray-800"><b>Thanh toán học phí</b> từ 5 thành viên</p>
+                                            <p class="text-xs text-gray-500 mt-1">4 giờ trước</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- System Status -->
+                            <div class="glass-morphism p-6 rounded-2xl card-shadow" data-aos="fade-up" data-aos-delay="600">
+                                <h3 class="text-xl font-bold text-gray-900 mb-6">⚡ Trạng thái hệ thống</h3>
+                                
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <div class="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                                            <span class="text-sm font-medium">Website CLB</span>
+                                        </div>
+                                        <span class="text-xs text-green-600 font-medium">Online</span>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <div class="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                                            <span class="text-sm font-medium">Database</span>
+                                        </div>
+                                        <span class="text-xs text-green-600 font-medium">Healthy</span>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <div class="w-3 h-3 bg-yellow-500 rounded-full mr-3"></div>
+                                            <span class="text-sm font-medium">Email Service</span>
+                                        </div>
+                                        <span class="text-xs text-yellow-600 font-medium">Warning</span>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <div class="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                                            <span class="text-sm font-medium">Payment Gateway</span>
+                                        </div>
+                                        <span class="text-xs text-green-600 font-medium">Active</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-6 p-4 bg-blue-50 rounded-xl">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-info-circle text-blue-500 mr-3"></i>
+                                        <div>
+                                            <p class="text-sm font-medium text-blue-800">Bảo trì định kỳ</p>
+                                            <p class="text-xs text-blue-600">Thứ 7, 21/09 lúc 2:00 AM</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Members Section -->
+                <div id="members" class="section-content">
+                    <div class="glass-morphism rounded-2xl card-shadow" data-aos="fade-up">
+                        <div class="p-6 border-b border-gray-100">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-gray-900">👥 Quản lý thành viên</h3>
+                                    <p class="text-gray-600">Danh sách và thông tin chi tiết thành viên CLB</p>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button onclick="exportMembers()" class="flex items-center px-4 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-colors">
+                                        <i class="fas fa-file-excel mr-2"></i>
+                                        Xuất Excel
+                                    </button>
+                                    <button onclick="openAddMemberModal()" class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors">
+                                        <i class="fas fa-user-plus mr-2"></i>
+                                        Thêm thành viên
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Member Stats -->
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                                <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-4 rounded-xl">
+                                    <div class="text-2xl font-bold">186</div>
+                                    <div class="text-sm opacity-90">Tổng thành viên</div>
+                                </div>
+                                <div class="bg-gradient-to-r from-green-500 to-green-600 text-white p-4 rounded-xl">
+                                    <div class="text-2xl font-bold">142</div>
+                                    <div class="text-sm opacity-90">Đang hoạt động</div>
+                                </div>
+                                <div class="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-4 rounded-xl">
+                                    <div class="text-2xl font-bold">23</div>
+                                    <div class="text-sm opacity-90">Ban cán sự</div>
+                                </div>
+                                <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white p-4 rounded-xl">
+                                    <div class="text-2xl font-bold">21</div>
+                                    <div class="text-sm opacity-90">Thành viên mới</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Advanced Filters -->
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                                <div class="relative">
+                                    <input 
+                                        type="text" 
+                                        placeholder="Tìm kiếm thành viên..." 
+                                        class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    >
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center">
+                                        <i class="fas fa-search text-gray-400"></i>
+                                    </div>
+                                </div>
+                                
+                                <select class="border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="">Tất cả vai trò</option>
+                                    <option value="admin">Administrator</option>
+                                    <option value="mod">Ban cán sự</option>
+                                    <option value="member">Thành viên</option>
+                                </select>
+                                
+                                <select class="border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="">Tất cả trạng thái</option>
+                                    <option value="active">Hoạt động</option>
+                                    <option value="inactive">Tạm ngưng</option>
+                                    <option value="graduated">Đã tốt nghiệp</option>
+                                </select>
+                                
+                                <select class="border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="">Tất cả khóa</option>
+                                    <option value="k21">Khóa 21</option>
+                                    <option value="k22">Khóa 22</option>
+                                    <option value="k23">Khóa 23</option>
+                                    <option value="k24">Khóa 24</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Members Table -->
+                        <div class="table-container">
+                            <table class="w-full">
+                                <thead class="bg-gray-50 sticky top-0">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <input type="checkbox" class="rounded">
+                                        </th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Thành viên</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">MSSV</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vai trò</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Khóa</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ngày tham gia</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Trạng thái</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hành động</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <!-- Member Row Template -->
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <input type="checkbox" class="rounded">
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1494790108755-2616b612345-avatar" alt="">
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-gray-900">Nguyễn Văn An</div>
+                                                    <div class="text-sm text-gray-500"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e0818ece8e879599858ea093949584858e94ce88959394ce858495ce968e">[email&#160;protected]</a></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20210001</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                                Administrator
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">K21</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">15/03/2024</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                Hoạt động
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <button class="text-blue-600 hover:text-blue-900 mr-3">Sửa</button>
+                                            <button class="text-red-600 hover:text-red-900">Xóa</button>
+                                        </td>
+                                    </tr>
+                                    
+                                    <!-- Additional rows for demo -->
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <input type="checkbox" class="rounded">
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-gray-900">Trần Thị Bình</div>
+                                                    <div class="text-sm text-gray-500"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f7959e999fd983859699b784838293929983d99f828483d9929382d98199">[email&#160;protected]</a></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20220045</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                                Ban cán sự
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">K22</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20/09/2024</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                Hoạt động
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <button class="text-blue-600 hover:text-blue-900 mr-3">Sửa</button>
+                                            <button class="text-red-600 hover:text-red-900">Xóa</button>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <input type="checkbox" class="rounded">
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-gray-900">Lê Hoàng Nam</div>
+                                                    <div class="text-sm text-gray-500"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="650b04084b09002516111001000b114b0d1016114b0001104b130b">[email&#160;protected]</a></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20230102</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                                Thành viên
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">K23</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">01/10/2024</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                Hoạt động
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <button class="text-blue-600 hover:text-blue-900 mr-3">Sửa</button>
+                                            <button class="text-red-600 hover:text-red-900">Xóa</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Pagination -->
+                        <div class="px-6 py-3 border-t border-gray-200 bg-gray-50">
+                            <div class="flex items-center justify-between">
+                                <div class="text-sm text-gray-700">
+                                    Hiển thị <span class="font-medium">1</span> đến <span class="font-medium">10</span> của <span class="font-medium">186</span> kết quả
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button class="px-3 py-2 text-sm bg-white border border-gray-300 rounded-lg hover:bg-gray-50">Trước</button>
+                                    <button class="px-3 py-2 text-sm bg-blue-600 text-white rounded-lg">1</button>
+                                    <button class="px-3 py-2 text-sm bg-white border border-gray-300 rounded-lg hover:bg-gray-50">2</button>
+                                    <button class="px-3 py-2 text-sm bg-white border border-gray-300 rounded-lg hover:bg-gray-50">3</button>
+                                    <button class="px-3 py-2 text-sm bg-white border border-gray-300 rounded-lg hover:bg-gray-50">Sau</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Events Section -->
+                <div id="events" class="section-content">
+                    <div class="glass-morphism rounded-2xl card-shadow" data-aos="fade-up">
+                        <div class="p-6 border-b border-gray-100">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-gray-900">📅 Quản lý sự kiện</h3>
+                                    <p class="text-gray-600">Tạo và quản lý các hoạt động của CLB</p>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button onclick="openEventModal()" class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors">
+                                        <i class="fas fa-calendar-plus mr-2"></i>
+                                        Tạo sự kiện
+                                    </button>
+                                    <button class="flex items-center px-4 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-colors">
+                                        <i class="fas fa-download mr-2"></i>
+                                        Xuất lịch
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Event Stats -->
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                                <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-4 rounded-xl">
+                                    <div class="text-2xl font-bold">15</div>
+                                    <div class="text-sm opacity-90">Sự kiện hoạt động</div>
+                                </div>
+                                <div class="bg-gradient-to-r from-green-500 to-green-600 text-white p-4 rounded-xl">
+                                    <div class="text-2xl font-bold">8</div>
+                                    <div class="text-sm opacity-90">Sắp diễn ra</div>
+                                </div>
+                                <div class="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-4 rounded-xl">
+                                    <div class="text-2xl font-bold">45</div>
+                                    <div class="text-sm opacity-90">Đã hoàn thành</div>
+                                </div>
+                                <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white p-4 rounded-xl">
+                                    <div class="text-2xl font-bold">1,234</div>
+                                    <div class="text-sm opacity-90">Tổng lượt tham gia</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Events List -->
+                        <div class="p-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <!-- Event Card -->
+                                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Workshop</span>
+                                        <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Đang mở đăng ký</span>
+                                    </div>
+                                    
+                                    <h4 class="text-lg font-bold text-gray-900 mb-2">Workshop React.js từ cơ bản đến nâng cao</h4>
+                                    <p class="text-gray-600 text-sm mb-4">Học React.js từ các khái niệm cơ bản đến những tính năng nâng cao như Hooks, Context API...</p>
+                                    
+                                    <div class="space-y-2 mb-4">
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <i class="fas fa-calendar mr-2"></i>
+                                            <span>25/09/2025 - 14:00</span>
+                                        </div>
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <i class="fas fa-map-marker-alt mr-2"></i>
+                                            <span>Phòng 101 - Tòa D3</span>
+                                        </div>
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <i class="fas fa-users mr-2"></i>
+                                            <span>45/50 đã đăng ký</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex space-x-2">
+                                        <button class="flex-1 bg-blue-600 text-white text-sm py-2 rounded-lg hover:bg-blue-700 transition-colors">Chi tiết</button>
+                                        <button class="flex-1 bg-gray-200 text-gray-700 text-sm py-2 rounded-lg hover:bg-gray-300 transition-colors">Chỉnh sửa</button>
+                                    </div>
+                                </div>
+
+                                <!-- Event Card 2 -->
+                                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Hội thảo</span>
+                                        <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Sắp diễn ra</span>
+                                    </div>
+                                    
+                                    <h4 class="text-lg font-bold text-gray-900 mb-2">Hội thảo AI & Machine Learning</h4>
+                                    <p class="text-gray-600 text-sm mb-4">Khám phá thế giới AI và Machine Learning cùng các chuyên gia hàng đầu trong ngành...</p>
+                                    
+                                    <div class="space-y-2 mb-4">
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <i class="fas fa-calendar mr-2"></i>
+                                            <span>30/09/2025 - 09:00</span>
+                                        </div>
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <i class="fas fa-map-marker-alt mr-2"></i>
+                                            <span>Hội trường C2</span>
+                                        </div>
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <i class="fas fa-users mr-2"></i>
+                                            <span>120/150 đã đăng ký</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex space-x-2">
+                                        <button class="flex-1 bg-blue-600 text-white text-sm py-2 rounded-lg hover:bg-blue-700 transition-colors">Chi tiết</button>
+                                        <button class="flex-1 bg-gray-200 text-gray-700 text-sm py-2 rounded-lg hover:bg-gray-300 transition-colors">Chỉnh sửa</button>
+                                    </div>
+                                </div>
+
+                                <!-- Event Card 3 -->
+                                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Team Building</span>
+                                        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Đang lên kế hoạch</span>
+                                    </div>
+                                    
+                                    <h4 class="text-lg font-bold text-gray-900 mb-2">Team Building CLB IT 2025</h4>
+                                    <p class="text-gray-600 text-sm mb-4">Hoạt động gắn kết các thành viên trong CLB qua các trò chơi và thử thách thú vị...</p>
+                                    
+                                    <div class="space-y-2 mb-4">
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <i class="fas fa-calendar mr-2"></i>
+                                            <span>15/10/2025 - 08:00</span>
+                                        </div>
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <i class="fas fa-map-marker-alt mr-2"></i>
+                                            <span>Resort Ba Vì</span>
+                                        </div>
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <i class="fas fa-users mr-2"></i>
+                                            <span>0/100 đã đăng ký</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex space-x-2">
+                                        <button class="flex-1 bg-blue-600 text-white text-sm py-2 rounded-lg hover:bg-blue-700 transition-colors">Chi tiết</button>
+                                        <button class="flex-1 bg-gray-200 text-gray-700 text-sm py-2 rounded-lg hover:bg-gray-300 transition-colors">Chỉnh sửa</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Projects Section -->
+                <div id="projects" class="section-content">
+                    <div class="glass-morphism rounded-2xl card-shadow" data-aos="fade-up">
+                        <div class="p-6 border-b border-gray-100">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-gray-900">🚀 Quản lý dự án</h3>
+                                    <p class="text-gray-600">Theo dõi tiến độ và quản lý các dự án của CLB</p>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors">
+                                        <i class="fas fa-plus mr-2"></i>
+                                        Tạo dự án mới
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Projects Stats -->
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                                <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-4 rounded-xl">
+                                    <div class="text-2xl font-bold">8</div>
+                                    <div class="text-sm opacity-90">Dự án đang thực hiện</div>
+                                </div>
+                                <div class="bg-gradient-to-r from-green-500 to-green-600 text-white p-4 rounded-xl">
+                                    <div class="text-2xl font-bold">15</div>
+                                    <div class="text-sm opacity-90">Đã hoàn thành</div>
+                                </div>
+                                <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white p-4 rounded-xl">
+                                    <div class="text-2xl font-bold">3</div>
+                                    <div class="text-sm opacity-90">Tạm dừng</div>
+                                </div>
+                                <div class="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-4 rounded-xl">
+                                    <div class="text-2xl font-bold">85%</div>
+                                    <div class="text-sm opacity-90">Tỷ lệ hoàn thành</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Projects Grid -->
+                        <div class="p-6">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <!-- Project Card -->
+                                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Web Development</span>
+                                        <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Đang tiến hành</span>
+                                    </div>
+                                    
+                                    <h4 class="text-xl font-bold text-gray-900 mb-2">Website CLB Information Technologies</h4>
+                                    <p class="text-gray-600 text-sm mb-4">Phát triển website chính thức của CLB với đầy đủ các tính năng quản lý thành viên, sự kiện, dự án...</p>
+                                    
+                                    <div class="mb-4">
+                                        <div class="flex justify-between text-sm text-gray-600 mb-1">
+                                            <span>Tiến độ</span>
+                                            <span>75%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-blue-600 h-2 rounded-full" style="width: 75%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="space-y-2 mb-4">
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <i class="fas fa-calendar mr-2"></i>
+                                            <span>Deadline: 30/10/2025</span>
+                                        </div>
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <i class="fas fa-users mr-2"></i>
+                                            <span>5 thành viên tham gia</span>
+                                        </div>
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <i class="fas fa-code mr-2"></i>
+                                            <span>React.js, Node.js, MongoDB</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex space-x-2">
+                                        <button class="flex-1 bg-blue-600 text-white text-sm py-2 rounded-lg hover:bg-blue-700 transition-colors">Xem chi tiết</button>
+                                        <button class="flex-1 bg-gray-200 text-gray-700 text-sm py-2 rounded-lg hover:bg-gray-300 transition-colors">Cập nhật</button>
+                                    </div>
+                                </div>
+
+                                <!-- Project Card 2 -->
+                                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Mobile App</span>
+                                        <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Lên kế hoạch</span>
+                                    </div>
+                                    
+                                    <h4 class="text-xl font-bold text-gray-900 mb-2">CLB IT Mobile App</h4>
+                                    <p class="text-gray-600 text-sm mb-4">Ứng dụng di động cho thành viên CLB với các tính năng thông báo, check-in sự kiện, quản lý điểm danh...</p>
+                                    
+                                    <div class="mb-4">
+                                        <div class="flex justify-between text-sm text-gray-600 mb-1">
+                                            <span>Tiến độ</span>
+                                            <span>15%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-purple-600 h-2 rounded-full" style="width: 15%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="space-y-2 mb-4">
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <i class="fas fa-calendar mr-2"></i>
+                                            <span>Deadline: 15/12/2025</span>
+                                        </div>
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <i class="fas fa-users mr-2"></i>
+                                            <span>3 thành viên tham gia</span>
+                                        </div>
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <i class="fas fa-mobile-alt mr-2"></i>
+                                            <span>React Native, Firebase</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex space-x-2">
+                                        <button class="flex-1 bg-blue-600 text-white text-sm py-2 rounded-lg hover:bg-blue-700 transition-colors">Xem chi tiết</button>
+                                        <button class="flex-1 bg-gray-200 text-gray-700 text-sm py-2 rounded-lg hover:bg-gray-300 transition-colors">Cập nhật</button>
+                                    </div>
+                                </div>
+
+                                <!-- Project Card 3 -->
+                                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">AI/ML</span>
+                                        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Nghiên cứu</span>
+                                    </div>
+                                    
+                                    <h4 class="text-xl font-bold text-gray-900 mb-2">Chatbot AI hỗ trợ học tập</h4>
+                                    <p class="text-gray-600 text-sm mb-4">Phát triển chatbot AI giúp sinh viên trong việc học tập và tìm kiếm thông tin về các môn học...</p>
+                                    
+                                    <div class="mb-4">
+                                        <div class="flex justify-between text-sm text-gray-600 mb-1">
+                                            <span>Tiến độ</span>
+                                            <span>45%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-green-600 h-2 rounded-full" style="width: 45%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="space-y-2 mb-4">
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <i class="fas fa-calendar mr-2"></i>
+                                            <span>Deadline: 20/11/2025</span>
+                                        </div>
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <i class="fas fa-users mr-2"></i>
+                                            <span>4 thành viên tham gia</span>
+                                        </div>
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <i class="fas fa-robot mr-2"></i>
+                                            <span>Python, TensorFlow, OpenAI</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex space-x-2">
+                                        <button class="flex-1 bg-blue-600 text-white text-sm py-2 rounded-lg hover:bg-blue-700 transition-colors">Xem chi tiết</button>
+                                        <button class="flex-1 bg-gray-200 text-gray-700 text-sm py-2 rounded-lg hover:bg-gray-300 transition-colors">Cập nhật</button>
+                                    </div>
+                                </div>
+
+                                <!-- Project Card 4 -->
+                                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Game Dev</span>
+                                        <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Hoàn thành</span>
+                                    </div>
+                                    
+                                    <h4 class="text-xl font-bold text-gray-900 mb-2">Game học lập trình</h4>
+                                    <p class="text-gray-600 text-sm mb-4">Phát triển game giúp sinh viên học lập trình một cách thú vị và tương tác...</p>
+                                    
+                                    <div class="mb-4">
+                                        <div class="flex justify-between text-sm text-gray-600 mb-1">
+                                            <span>Tiến độ</span>
+                                            <span>100%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-green-600 h-2 rounded-full" style="width: 100%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="space-y-2 mb-4">
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <i class="fas fa-check mr-2"></i>
+                                            <span>Hoàn thành: 15/08/2025</span>
+                                        </div>
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <i class="fas fa-users mr-2"></i>
+                                            <span>6 thành viên tham gia</span>
+                                        </div>
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <i class="fas fa-gamepad mr-2"></i>
+                                            <span>Unity, C#</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex space-x-2">
+                                        <button class="flex-1 bg-green-600 text-white text-sm py-2 rounded-lg hover:bg-green-700 transition-colors">Xem demo</button>
+                                        <button class="flex-1 bg-gray-200 text-gray-700 text-sm py-2 rounded-lg hover:bg-gray-300 transition-colors">Báo cáo</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Finance Section -->
+                <div id="finance" class="section-content">
+                    <div class="glass-morphism rounded-2xl card-shadow" data-aos="fade-up">
+                        <div class="p-6 border-b border-gray-100">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-gray-900">💰 Quản lý tài chính</h3>
+                                    <p class="text-gray-600">Theo dõi thu chi và ngân sách của CLB</p>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors">
+                                        <i class="fas fa-plus mr-2"></i>
+                                        Thêm giao dịch
+                                    </button>
+                                    <button class="flex items-center px-4 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-colors">
+                                        <i class="fas fa-file-excel mr-2"></i>
+                                        Xuất báo cáo
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Finance Overview -->
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                                <div class="bg-gradient-to-r from-green-500 to-green-600 text-white p-4 rounded-xl">
+                                    <div class="text-2xl font-bold">25,750,000₫</div>
+                                    <div class="text-sm opacity-90">Tổng thu</div>
+                                </div>
+                                <div class="bg-gradient-to-r from-red-500 to-red-600 text-white p-4 rounded-xl">
+                                    <div class="text-2xl font-bold">18,200,000₫</div>
+                                    <div class="text-sm opacity-90">Tổng chi</div>
+                                </div>
+                                <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-4 rounded-xl">
+                                    <div class="text-2xl font-bold">7,550,000₫</div>
+                                    <div class="text-sm opacity-90">Số dư hiện tại</div>
+                                </div>
+                                <div class="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-4 rounded-xl">
+                                    <div class="text-2xl font-bold">156</div>
+                                    <div class="text-sm opacity-90">Giao dịch tháng này</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Finance Charts & Transactions -->
+                        <div class="p-6">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                <!-- Chart Section -->
+                                <div class="bg-white border border-gray-200 rounded-xl p-6">
+                                    <h4 class="text-lg font-bold text-gray-900 mb-4">📊 Biểu đồ thu chi</h4>
+                                    <div class="chart-container">
+                                        <canvas id="financeChart"></canvas>
+                                    </div>
+                                </div>
+                                
+                                <!-- Recent Transactions -->
+                                <div class="bg-white border border-gray-200 rounded-xl p-6">
+                                    <h4 class="text-lg font-bold text-gray-900 mb-4">📝 Giao dịch gần đây</h4>
+                                    <div class="space-y-4 max-h-96 overflow-y-auto">
+                                        <!-- Transaction Item -->
+                                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                            <div class="flex items-center">
+                                                <div class="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center mr-3">
+                                                    <i class="fas fa-arrow-down"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="text-sm font-medium text-gray-900">Học phí thành viên</p>
+                                                    <p class="text-xs text-gray-500">15/09/2025</p>
+                                                </div>
+                                            </div>
+                                            <span class="text-green-600 font-bold">+500,000₫</span>
+                                        </div>
+                                        
+                                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                            <div class="flex items-center">
+                                                <div class="w-10 h-10 bg-red-100 text-red-600 rounded-full flex items-center justify-center mr-3">
+                                                    <i class="fas fa-arrow-up"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="text-sm font-medium text-gray-900">Mua thiết bị workshop</p>
+                                                    <p class="text-xs text-gray-500">14/09/2025</p>
+                                                </div>
+                                            </div>
+                                            <span class="text-red-600 font-bold">-1,200,000₫</span>
+                                        </div>
+                                        
+                                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                            <div class="flex items-center">
+                                                <div class="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center mr-3">
+                                                    <i class="fas fa-arrow-down"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="text-sm font-medium text-gray-900">Tài trợ từ công ty X</p>
+                                                    <p class="text-xs text-gray-500">12/09/2025</p>
+                                                </div>
+                                            </div>
+                                            <span class="text-green-600 font-bold">+5,000,000₫</span>
+                                        </div>
+                                        
+                                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                            <div class="flex items-center">
+                                                <div class="w-10 h-10 bg-red-100 text-red-600 rounded-full flex items-center justify-center mr-3">
+                                                    <i class="fas fa-arrow-up"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="text-sm font-medium text-gray-900">Chi phí tổ chức sự kiện</p>
+                                                    <p class="text-xs text-gray-500">10/09/2025</p>
+                                                </div>
+                                            </div>
+                                            <span class="text-red-600 font-bold">-800,000₫</span>
+                                        </div>
+                                        
+                                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                            <div class="flex items-center">
+                                                <div class="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center mr-3">
+                                                    <i class="fas fa-arrow-down"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="text-sm font-medium text-gray-900">Bán vé workshop</p>
+                                                    <p class="text-xs text-gray-500">08/09/2025</p>
+                                                </div>
+                                            </div>
+                                            <span class="text-green-600 font-bold">+1,500,000₫</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Communications Section -->
+                <div id="communications" class="section-content">
+                    <div class="glass-morphism rounded-2xl card-shadow" data-aos="fade-up">
+                        <div class="p-6 border-b border-gray-100">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-gray-900">📢 Quản lý truyền thông</h3>
+                                    <p class="text-gray-600">Quản lý nội dung và chiến dịch truyền thông</p>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors">
+                                        <i class="fas fa-plus mr-2"></i>
+                                        Tạo bài viết
+                                    </button>
+                                    <button class="flex items-center px-4 py-2 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition-colors">
+                                        <i class="fas fa-calendar mr-2"></i>
+                                        Lên lịch đăng
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Social Media Stats -->
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                                <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-4 rounded-xl">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <div class="text-2xl font-bold">5,432</div>
+                                            <div class="text-sm opacity-90">Facebook Followers</div>
+                                        </div>
+                                        <i class="fab fa-facebook text-3xl opacity-70"></i>
+                                    </div>
+                                </div>
+                                <div class="bg-gradient-to-r from-pink-500 to-pink-600 text-white p-4 rounded-xl">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <div class="text-2xl font-bold">2,186</div>
+                                            <div class="text-sm opacity-90">Instagram Followers</div>
+                                        </div>
+                                        <i class="fab fa-instagram text-3xl opacity-70"></i>
+                                    </div>
+                                </div>
+                                <div class="bg-gradient-to-r from-red-500 to-red-600 text-white p-4 rounded-xl">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <div class="text-2xl font-bold">1,892</div>
+                                            <div class="text-sm opacity-90">YouTube Subscribers</div>
+                                        </div>
+                                        <i class="fab fa-youtube text-3xl opacity-70"></i>
+                                    </div>
+                                </div>
+                                <div class="bg-gradient-to-r from-gray-500 to-gray-600 text-white p-4 rounded-xl">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <div class="text-2xl font-bold">3,754</div>
+                                            <div class="text-sm opacity-90">Website Visitors</div>
+                                        </div>
+                                        <i class="fas fa-globe text-3xl opacity-70"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Content Management -->
+                        <div class="p-6">
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                                <!-- Recent Posts -->
+                                <div class="lg:col-span-2">
+                                    <h4 class="text-lg font-bold text-gray-900 mb-4">📝 Bài viết gần đây</h4>
+                                    <div class="space-y-4">
+                                        <!-- Post Item -->
+                                        <div class="bg-white border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-all">
+                                            <div class="flex items-start space-x-4">
+                                                <img class="w-16 h-16 object-cover rounded-lg" src="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&h=256&q=80" alt="">
+                                                <div class="flex-1">
+                                                    <h5 class="text-lg font-semibold text-gray-900 mb-1">Workshop React.js - Đăng ký mở!</h5>
+                                                    <p class="text-gray-600 text-sm mb-2">Chúng mình vô cùng hân hạnh giới thiệu Workshop React.js từ cơ bản đến nâng cao...</p>
+                                                    <div class="flex items-center justify-between">
+                                                        <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                                            <span><i class="fas fa-heart mr-1"></i>156 likes</span>
+                                                            <span><i class="fas fa-share mr-1"></i>23 shares</span>
+                                                            <span><i class="fas fa-comment mr-1"></i>12 comments</span>
+                                                        </div>
+                                                        <span class="text-xs text-gray-500">15/09/2025</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="bg-white border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-all">
+                                            <div class="flex items-start space-x-4">
+                                                <img class="w-16 h-16 object-cover rounded-lg" src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&h=256&q=80" alt="">
+                                                <div class="flex-1">
+                                                    <h5 class="text-lg font-semibold text-gray-900 mb-1">Thành tích CLB IT tại Hackathon 2025</h5>
+                                                    <p class="text-gray-600 text-sm mb-2">Chúc mừng team CLB IT đã đạt giải Nhì tại cuộc thi Hackathon toàn quốc...</p>
+                                                    <div class="flex items-center justify-between">
+                                                        <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                                            <span><i class="fas fa-heart mr-1"></i>289 likes</span>
+                                                            <span><i class="fas fa-share mr-1"></i>45 shares</span>
+                                                            <span><i class="fas fa-comment mr-1"></i>31 comments</span>
+                                                        </div>
+                                                        <span class="text-xs text-gray-500">12/09/2025</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="bg-white border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-all">
+                                            <div class="flex items-start space-x-4">
+                                                <img class="w-16 h-16 object-cover rounded-lg" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&h=256&q=80" alt="">
+                                                <div class="flex-1">
+                                                    <h5 class="text-lg font-semibold text-gray-900 mb-1">Tuyển thành viên mới khóa 2025</h5>
+                                                    <p class="text-gray-600 text-sm mb-2">CLB Information Technologies đang mở đợt tuyển thành viên mới...</p>
+                                                    <div class="flex items-center justify-between">
+                                                        <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                                            <span><i class="fas fa-heart mr-1"></i>198 likes</span>
+                                                            <span><i class="fas fa-share mr-1"></i>67 shares</span>
+                                                            <span><i class="fas fa-comment mr-1"></i>24 comments</span>
+                                                        </div>
+                                                        <span class="text-xs text-gray-500">10/09/2025</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Scheduled Posts & Analytics -->
+                                <div class="space-y-6">
+                                    <!-- Scheduled Posts -->
+                                    <div class="bg-white border border-gray-200 rounded-xl p-4">
+                                        <h4 class="text-lg font-bold text-gray-900 mb-4">⏰ Bài viết đã lên lịch</h4>
+                                        <div class="space-y-3">
+                                            <div class="p-3 bg-blue-50 rounded-lg">
+                                                <p class="text-sm font-medium text-gray-900">Thông báo hội thảo AI</p>
+                                                <p class="text-xs text-gray-500">20/09/2025 - 08:00</p>
+                                            </div>
+                                            <div class="p-3 bg-green-50 rounded-lg">
+                                                <p class="text-sm font-medium text-gray-900">Kết quả dự án tháng 9</p>
+                                                <p class="text-xs text-gray-500">25/09/2025 - 14:00</p>
+                                            </div>
+                                            <div class="p-3 bg-purple-50 rounded-lg">
+                                                <p class="text-sm font-medium text-gray-900">Tuyển mentor mới</p>
+                                                <p class="text-xs text-gray-500">01/10/2025 - 09:00</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Content Analytics -->
+                                    <div class="bg-white border border-gray-200 rounded-xl p-4">
+                                        <h4 class="text-lg font-bold text-gray-900 mb-4">📈 Phân tích nội dung</h4>
+                                        <div class="space-y-3">
+                                            <div class="flex justify-between items-center">
+                                                <span class="text-sm text-gray-600">Engagement rate</span>
+                                                <span class="text-sm font-bold text-green-600">8.5%</span>
+                                            </div>
+                                            <div class="flex justify-between items-center">
+                                                <span class="text-sm text-gray-600">Reach tháng này</span>
+                                                <span class="text-sm font-bold text-blue-600">45,678</span>
+                                            </div>
+                                            <div class="flex justify-between items-center">
+                                                <span class="text-sm text-gray-600">Followers mới</span>
+                                                <span class="text-sm font-bold text-purple-600">+234</span>
+                                            </div>
+                                            <div class="flex justify-between items-center">
+                                                <span class="text-sm text-gray-600">Bài viết đã đăng</span>
+                                                <span class="text-sm font-bold text-gray-600">18</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Section -->
+                <div id="analytics" class="section-content">
+                    <div class="glass-morphism rounded-2xl card-shadow" data-aos="fade-up">
+                        <div class="p-6 border-b border-gray-100">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-gray-900">📊 Phân tích & thống kê</h3>
+                                    <p class="text-gray-600">Báo cáo chi tiết về hoạt động CLB</p>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <select class="border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <option>7 ngày qua</option>
+                                        <option>30 ngày qua</option>
+                                        <option>3 tháng qua</option>
+                                        <option>1 năm qua</option>
+                                    </select>
+                                    <button class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors">
+                                        <i class="fas fa-download mr-2"></i>
+                                        Tải báo cáo
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Analytics Content -->
+                        <div class="p-6">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                <!-- Member Growth Chart -->
+                                <div class="bg-white border border-gray-200 rounded-xl p-6">
+                                    <h4 class="text-lg font-bold text-gray-900 mb-4">👥 Tăng trưởng thành viên</h4>
+                                    <div class="chart-container">
+                                        <canvas id="memberGrowthChart"></canvas>
+                                    </div>
+                                </div>
+                                
+                                <!-- Event Participation -->
+                                <div class="bg-white border border-gray-200 rounded-xl p-6">
+                                    <h4 class="text-lg font-bold text-gray-900 mb-4">📅 Tham gia sự kiện</h4>
+                                    <div class="chart-container">
+                                        <canvas id="eventParticipationChart"></canvas>
+                                    </div>
+                                </div>
+                                
+                                <!-- Performance Metrics -->
+                                <div class="bg-white border border-gray-200 rounded-xl p-6">
+                                    <h4 class="text-lg font-bold text-gray-900 mb-4">⚡ Chỉ số hiệu suất</h4>
+                                    <div class="space-y-4">
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-gray-600">Tỷ lệ tham gia sự kiện</span>
+                                            <div class="flex items-center">
+                                                <div class="w-32 bg-gray-200 rounded-full h-2 mr-3">
+                                                    <div class="bg-blue-600 h-2 rounded-full" style="width: 78%"></div>
+                                                </div>
+                                                <span class="font-bold text-blue-600">78%</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-gray-600">Mức độ hài lòng</span>
+                                            <div class="flex items-center">
+                                                <div class="w-32 bg-gray-200 rounded-full h-2 mr-3">
+                                                    <div class="bg-green-600 h-2 rounded-full" style="width: 92%"></div>
+                                                </div>
+                                                <span class="font-bold text-green-600">92%</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-gray-600">Tỷ lệ hoàn thành dự án</span>
+                                            <div class="flex items-center">
+                                                <div class="w-32 bg-gray-200 rounded-full h-2 mr-3">
+                                                    <div class="bg-purple-600 h-2 rounded-full" style="width: 85%"></div>
+                                                </div>
+                                                <span class="font-bold text-purple-600">85%</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-gray-600">Hoạt động mạng xã hội</span>
+                                            <div class="flex items-center">
+                                                <div class="w-32 bg-gray-200 rounded-full h-2 mr-3">
+                                                    <div class="bg-pink-600 h-2 rounded-full" style="width: 73%"></div>
+                                                </div>
+                                                <span class="font-bold text-pink-600">73%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Top Performers -->
+                                <div class="bg-white border border-gray-200 rounded-xl p-6">
+                                    <h4 class="text-lg font-bold text-gray-900 mb-4">🏆 Thành viên xuất sắc</h4>
+                                    <div class="space-y-4">
+                                        <div class="flex items-center p-3 bg-yellow-50 rounded-lg">
+                                            <div class="w-10 h-10 bg-yellow-500 text-white rounded-full flex items-center justify-center mr-3">
+                                                <span class="font-bold">1</span>
+                                            </div>
+                                            <div class="flex-1">
+                                                <p class="font-medium text-gray-900">Nguyễn Văn An</p>
+                                                <p class="text-sm text-gray-500">98 điểm hoạt động</p>
+                                            </div>
+                                            <i class="fas fa-trophy text-yellow-500"></i>
+                                        </div>
+                                        
+                                        <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+                                            <div class="w-10 h-10 bg-gray-400 text-white rounded-full flex items-center justify-center mr-3">
+                                                <span class="font-bold">2</span>
+                                            </div>
+                                            <div class="flex-1">
+                                                <p class="font-medium text-gray-900">Trần Thị Bình</p>
+                                                <p class="text-sm text-gray-500">94 điểm hoạt động</p>
+                                            </div>
+                                            <i class="fas fa-medal text-gray-400"></i>
+                                        </div>
+                                        
+                                        <div class="flex items-center p-3 bg-orange-50 rounded-lg">
+                                            <div class="w-10 h-10 bg-orange-500 text-white rounded-full flex items-center justify-center mr-3">
+                                                <span class="font-bold">3</span>
+                                            </div>
+                                            <div class="flex-1">
+                                                <p class="font-medium text-gray-900">Lê Hoàng Nam</p>
+                                                <p class="text-sm text-gray-500">89 điểm hoạt động</p>
+                                            </div>
+                                            <i class="fas fa-medal text-orange-500"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reports Section -->
+                <div id="reports" class="section-content">
+                    <div class="glass-morphism rounded-2xl card-shadow" data-aos="fade-up">
+                        <div class="p-6 border-b border-gray-100">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-gray-900">📋 Báo cáo</h3>
+                                    <p class="text-gray-600">Tạo và quản lý các báo cáo CLB</p>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors">
+                                        <i class="fas fa-plus mr-2"></i>
+                                        Tạo báo cáo
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Reports Content -->
+                        <div class="p-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <!-- Report Templates -->
+                                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all">
+                                    <div class="text-center mb-4">
+                                        <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                                            <i class="fas fa-users text-2xl"></i>
+                                        </div>
+                                        <h4 class="text-lg font-bold text-gray-900">Báo cáo thành viên</h4>
+                                        <p class="text-gray-600 text-sm">Thống kê chi tiết về thành viên CLB</p>
+                                    </div>
+                                    <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                        Tạo báo cáo
+                                    </button>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all">
+                                    <div class="text-center mb-4">
+                                        <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                                            <i class="fas fa-calendar text-2xl"></i>
+                                        </div>
+                                        <h4 class="text-lg font-bold text-gray-900">Báo cáo sự kiện</h4>
+                                        <p class="text-gray-600 text-sm">Tổng hợp các hoạt động và sự kiện</p>
+                                    </div>
+                                    <button class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition-colors">
+                                        Tạo báo cáo
+                                    </button>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all">
+                                    <div class="text-center mb-4">
+                                        <div class="w-16 h-16 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                                            <i class="fas fa-dollar-sign text-2xl"></i>
+                                        </div>
+                                        <h4 class="text-lg font-bold text-gray-900">Báo cáo tài chính</h4>
+                                        <p class="text-gray-600 text-sm">Phân tích thu chi và ngân sách</p>
+                                    </div>
+                                    <button class="w-full bg-yellow-600 text-white py-2 rounded-lg hover:bg-yellow-700 transition-colors">
+                                        Tạo báo cáo
+                                    </button>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all">
+                                    <div class="text-center mb-4">
+                                        <div class="w-16 h-16 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                                            <i class="fas fa-project-diagram text-2xl"></i>
+                                        </div>
+                                        <h4 class="text-lg font-bold text-gray-900">Báo cáo dự án</h4>
+                                        <p class="text-gray-600 text-sm">Tiến độ và kết quả các dự án</p>
+                                    </div>
+                                    <button class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition-colors">
+                                        Tạo báo cáo
+                                    </button>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all">
+                                    <div class="text-center mb-4">
+                                        <div class="w-16 h-16 bg-pink-100 text-pink-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                                            <i class="fas fa-chart-line text-2xl"></i>
+                                        </div>
+                                        <h4 class="text-lg font-bold text-gray-900">Báo cáo hiệu suất</h4>
+                                        <p class="text-gray-600 text-sm">Đánh giá tổng thể hoạt động CLB</p>
+                                    </div>
+                                    <button class="w-full bg-pink-600 text-white py-2 rounded-lg hover:bg-pink-700 transition-colors">
+                                        Tạo báo cáo
+                                    </button>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all">
+                                    <div class="text-center mb-4">
+                                        <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                                            <i class="fas fa-file-alt text-2xl"></i>
+                                        </div>
+                                        <h4 class="text-lg font-bold text-gray-900">Báo cáo tùy chỉnh</h4>
+                                        <p class="text-gray-600 text-sm">Tạo báo cáo theo yêu cầu riêng</p>
+                                    </div>
+                                    <button class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors">
+                                        Tạo báo cáo
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Recent Reports -->
+                            <div class="mt-8">
+                                <h4 class="text-lg font-bold text-gray-900 mb-4">📊 Báo cáo gần đây</h4>
+                                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden">
+                                    <table class="w-full">
+                                        <thead class="bg-gray-50">
+                                            <tr>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tên báo cáo</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Loại</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ngày tạo</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Trạng thái</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hành động</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white divide-y divide-gray-200">
+                                            <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <div class="text-sm font-medium text-gray-900">Báo cáo tháng 9/2025</div>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                                        Tổng hợp
+                                                    </span>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">15/09/2025</td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                        Hoàn thành
+                                                    </span>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                                    <button class="text-blue-600 hover:text-blue-900 mr-3">Tải xuống</button>
+                                                    <button class="text-gray-600 hover:text-gray-900">Xem</button>
+                                                </td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <div class="text-sm font-medium text-gray-900">Thống kê hoạt động Q3</div>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                                        Phân tích
+                                                    </span>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">10/09/2025</td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                                        Đang xử lý
+                                                    </span>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                                    <button class="text-gray-400 cursor-not-allowed mr-3">Tải xuống</button>
+                                                    <button class="text-blue-600 hover:text-blue-900">Xem tiến độ</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Section -->
+                <div id="settings" class="section-content">
+                    <div class="glass-morphism rounded-2xl card-shadow" data-aos="fade-up">
+                        <div class="p-6 border-b border-gray-100">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-gray-900">⚙️ Cài đặt hệ thống</h3>
+                                    <p class="text-gray-600">Quản lý cấu hình và tùy chỉnh hệ thống</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Settings Content -->
+                        <div class="p-6">
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                                <!-- Settings Menu -->
+                                <div class="lg:col-span-1">
+                                    <div class="bg-white border border-gray-200 rounded-xl p-4">
+                                        <nav class="space-y-2">
+                                            <button onclick="showSettingsTab('general')" class="w-full text-left px-4 py-3 text-blue-600 bg-blue-50 rounded-lg font-medium settings-tab active">
+                                                <i class="fas fa-cog mr-3"></i>Cài đặt chung
+                                            </button>
+                                            <button onclick="showSettingsTab('users')" class="w-full text-left px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg font-medium settings-tab">
+                                                <i class="fas fa-users mr-3"></i>Quản lý người dùng
+                                            </button>
+                                            <button onclick="showSettingsTab('security')" class="w-full text-left px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg font-medium settings-tab">
+                                                <i class="fas fa-shield-alt mr-3"></i>Bảo mật
+                                            </button>
+                                            <button onclick="showSettingsTab('notifications')" class="w-full text-left px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg font-medium settings-tab">
+                                                <i class="fas fa-bell mr-3"></i>Thông báo
+                                            </button>
+                                            <button onclick="showSettingsTab('integrations')" class="w-full text-left px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg font-medium settings-tab">
+                                                <i class="fas fa-plug mr-3"></i>Tích hợp
+                                            </button>
+                                            <button onclick="showSettingsTab('backup')" class="w-full text-left px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg font-medium settings-tab">
+                                                <i class="fas fa-database mr-3"></i>Sao lưu
+                                            </button>
+                                        </nav>
+                                    </div>
+                                </div>
+                                
+                                <!-- Settings Content -->
+                                <div class="lg:col-span-2">
+                                    <!-- General Settings -->
+                                    <div id="general-settings" class="settings-content">
+                                        <div class="bg-white border border-gray-200 rounded-xl p-6">
+                                            <h4 class="text-lg font-bold text-gray-900 mb-6">🔧 Cài đặt chung</h4>
+                                            
+                                            <div class="space-y-6">
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Tên CLB</label>
+                                                    <input type="text" value="CLB Information Technologies" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                                </div>
+                                                
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Mô tả</label>
+                                                    <textarea rows="3" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">CLB Information Technologies - Nơi kết nối đam mê công nghệ và phát triển kỹ năng lập trình</textarea>
+                                                </div>
+                                                
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Email liên hệ</label>
+                                                    <input type="email" value="contact@clbit.hust.edu.vn" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                                </div>
+                                                
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Số điện thoại</label>
+                                                    <input type="tel" value="024.3868.3008" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                                </div>
+                                                
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Múi giờ</label>
+                                                    <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                                        <option>UTC+7 (Asia/Ho_Chi_Minh)</option>
+                                                        <option>UTC+0 (GMT)</option>
+                                                        <option>UTC+8 (Asia/Shanghai)</option>
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="flex items-center justify-between">
+                                                    <div>
+                                                        <label class="block text-sm font-medium text-gray-700">Bảo trì hệ thống</label>
+                                                        <p class="text-sm text-gray-500">Bật chế độ bảo trì để ngăn người dùng truy cập</p>
+                                                    </div>
+                                                    <label class="relative inline-flex items-center cursor-pointer">
+                                                        <input type="checkbox" class="sr-only peer">
+                                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mt-6 pt-6 border-t border-gray-200">
+                                                <button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                                    Lưu thay đổi
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Other settings tabs would be added here similarly -->
+                                    <div id="users-settings" class="settings-content hidden">
+                                        <div class="bg-white border border-gray-200 rounded-xl p-6">
+                                            <h4 class="text-lg font-bold text-gray-900 mb-6">👥 Quản lý người dùng</h4>
+                                            <p class="text-gray-600">Nội dung quản lý người dùng sẽ được hiển thị ở đây...</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="security-settings" class="settings-content hidden">
+                                        <div class="bg-white border border-gray-200 rounded-xl p-6">
+                                            <h4 class="text-lg font-bold text-gray-900 mb-6">🔒 Cài đặt bảo mật</h4>
+                                            <p class="text-gray-600">Nội dung cài đặt bảo mật sẽ được hiển thị ở đây...</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Modal -->
+    <div id="createModal" class="fixed inset-0 z-50 hidden">
+        <div class="modal-backdrop fixed inset-0"></div>
+        <div class="fixed inset-0 flex items-center justify-center p-4">
+            <div class="glass-morphism rounded-2xl p-6 w-full max-w-md">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-bold text-gray-900">🚀 Tạo mới</h3>
+                    <button onclick="closeCreateModal()" class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="space-y-3">
+                    <button class="w-full flex items-center px-4 py-3 text-left bg-blue-50 hover:bg-blue-100 rounded-xl transition-colors">
+                        <i class="fas fa-user-plus text-blue-600 mr-3"></i>
+                        <span class="text-blue-800 font-medium">Thêm thành viên mới</span>
+                    </button>
+                    
+                    <button class="w-full flex items-center px-4 py-3 text-left bg-green-50 hover:bg-green-100 rounded-xl transition-colors">
+                        <i class="fas fa-calendar-plus text-green-600 mr-3"></i>
+                        <span class="text-green-800 font-medium">Tạo sự kiện mới</span>
+                    </button>
+                    
+                    <button class="w-full flex items-center px-4 py-3 text-left bg-purple-50 hover:bg-purple-100 rounded-xl transition-colors">
+                        <i class="fas fa-project-diagram text-purple-600 mr-3"></i>
+                        <span class="text-purple-800 font-medium">Khởi tạo dự án</span>
+                    </button>
+                    
+                    <button class="w-full flex items-center px-4 py-3 text-left bg-yellow-50 hover:bg-yellow-100 rounded-xl transition-colors">
+                        <i class="fas fa-bullhorn text-yellow-600 mr-3"></i>
+                        <span class="text-yellow-800 font-medium">Đăng bài viết</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Scripts -->
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        // Initialize AOS animations
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Hide loading screen after page loads
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+            }, 1500);
+        });
+
+        // Particles.js configuration
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 50, density: { enable: true, value_area: 800 } },
+                color: { value: "#3b82f6" },
+                shape: { type: "circle" },
+                opacity: { value: 0.3, random: false },
+                size: { value: 3, random: true },
+                line_linked: { enable: true, distance: 150, color: "#3b82f6", opacity: 0.2, width: 1 },
+                move: { enable: true, speed: 2, direction: "none", random: false, straight: false, out_mode: "out", bounce: false }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" }, resize: true },
+                modes: { grab: { distance: 400, line_linked: { opacity: 1 } }, bubble: { distance: 400, size: 40, duration: 2, opacity: 8, speed: 3 }, repulse: { distance: 200, duration: 0.4 }, push: { particles_nb: 4 }, remove: { particles_nb: 2 } }
+            },
+            retina_detect: true
+        });
+
+        // Real-time clock
+        function updateRealTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('vi-VN', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            const element = document.getElementById('realTime');
+            if (element) {
+                element.textContent = timeString;
+            }
+        }
+
+        setInterval(updateRealTime, 1000);
+        updateRealTime();
+
+        // Navigation system
+        function showSection(sectionName) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section-content');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show selected section
+            const targetSection = document.getElementById(sectionName);
+            if (targetSection) {
+                targetSection.classList.add('active');
+                targetSection.classList.add('fade-in');
+            }
+
+            // Update navigation state
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Find and activate current nav item
+            const currentNavItem = document.querySelector(`[onclick="showSection('${sectionName}')"]`);
+            if (currentNavItem) {
+                currentNavItem.classList.add('active');
+            }
+
+            // Update page title
+            const titles = {
+                'dashboard': 'Dashboard',
+                'members': 'Quản lý thành viên',
+                'events': 'Quản lý sự kiện',
+                'projects': 'Quản lý dự án',
+                'finance': 'Quản lý tài chính',
+                'communications': 'Truyền thông',
+                'analytics': 'Phân tích',
+                'reports': 'Báo cáo',
+                'settings': 'Cài đặt'
+            };
+
+            if (titles[sectionName]) {
+                showToast(`Đã chuyển đến ${titles[sectionName]}`, 'info');
+            }
+        }
+
+        // Settings tabs system
+        function showSettingsTab(tabName) {
+            // Hide all settings content
+            const contents = document.querySelectorAll('.settings-content');
+            contents.forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            // Show selected content
+            const targetContent = document.getElementById(tabName + '-settings');
+            if (targetContent) {
+                targetContent.classList.remove('hidden');
+            }
+
+            // Update tab state
+            const tabs = document.querySelectorAll('.settings-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active', 'text-blue-600', 'bg-blue-50');
+                tab.classList.add('text-gray-600');
+            });
+
+            // Activate current tab
+            const currentTab = document.querySelector(`[onclick="showSettingsTab('${tabName}')"]`);
+            if (currentTab) {
+                currentTab.classList.add('active', 'text-blue-600', 'bg-blue-50');
+                currentTab.classList.remove('text-gray-600');
+            }
+        }
+
+        // Initialize Charts
+        function initializeCharts() {
+            // Advanced Chart
+            const advancedCtx = document.getElementById('advancedChart');
+            if (advancedCtx) {
+                new Chart(advancedCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6'],
+                        datasets: [{
+                            label: 'Thành viên mới',
+                            data: [12, 19, 23, 15, 28, 35],
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }, {
+                            label: 'Sự kiện',
+                            data: [8, 12, 15, 18, 22, 25],
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Finance Chart
+            const financeCtx = document.getElementById('financeChart');
+            if (financeCtx) {
+                new Chart(financeCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6'],
+                        datasets: [{
+                            label: 'Thu',
+                            data: [15000000, 18000000, 22000000, 19000000, 25000000, 28000000],
+                            backgroundColor: '#10b981'
+                        }, {
+                            label: 'Chi',
+                            data: [12000000, 15000000, 18000000, 16000000, 20000000, 22000000],
+                            backgroundColor: '#ef4444'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value) {
+                                        return value.toLocaleString() + '₫';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Member Growth Chart
+            const memberGrowthCtx = document.getElementById('memberGrowthChart');
+            if (memberGrowthCtx) {
+                new Chart(memberGrowthCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6'],
+                        datasets: [{
+                            label: 'Tổng thành viên',
+                            data: [150, 165, 178, 182, 186, 186],
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: false
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Event Participation Chart
+            const eventParticipationCtx = document.getElementById('eventParticipationChart');
+            if (eventParticipationCtx) {
+                new Chart(eventParticipationCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Workshop', 'Hội thảo', 'Team Building', 'Hackathon'],
+                        datasets: [{
+                            data: [40, 25, 20, 15],
+                            backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Counter animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-count'));
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    counter.textContent = Math.floor(current);
+                }, 16);
+            });
+        }
+
+        function animateHeaderCounters() {
+            const counters = [
+                { element: document.getElementById('todayEvents'), target: 3, duration: 1000 },
+                { element: document.getElementById('activeUsers'), target: 47, duration: 1500 },
+                { element: document.getElementById('totalRevenue'), target: 157, suffix: 'M', duration: 2000 }
+            ];
+
+            counters.forEach(({element, target, duration, suffix = ''}) => {
+                if (element) {
+                    const step = target / (duration / 16);
+                    let current = 0;
+
+                    const timer = setInterval(() => {
+                        current += step;
+                        if (current >= target) {
+                            current = target;
+                            clearInterval(timer);
+                        }
+                        element.textContent = Math.floor(current) + suffix;
+                    }, 16);
+                }
+            });
+        }
+
+        // Modal functions
+        function openCreateModal() {
+            document.getElementById('createModal').classList.remove('hidden');
+        }
+
+        function closeCreateModal() {
+            document.getElementById('createModal').classList.add('hidden');
+        }
+
+        function openEventModal() {
+            showToast('Mở form tạo sự kiện mới', 'info');
+        }
+
+        function openAddMemberModal() {
+            showToast('Mở form thêm thành viên mới', 'info');
+        }
+
+        function exportMembers() {
+            showToast('Đang xuất danh sách thành viên...', 'info');
+        }
+
+        function exportReport() {
+            showToast('Đang tạo báo cáo...', 'info');
+        }
+
+        // Toast notification system
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastContent = toast.querySelector('div');
+            
+            // Update content based on type
+            let icon = 'fas fa-check-circle';
+            let color = 'green';
+            
+            if (type === 'error') {
+                icon = 'fas fa-exclamation-circle';
+                color = 'red';
+            } else if (type === 'info') {
+                icon = 'fas fa-info-circle';
+                color = 'blue';
+            }
+            
+            toastContent.className = `bg-white border-l-4 border-${color}-500 rounded-lg shadow-lg p-4 max-w-sm`;
+            toastContent.innerHTML = `
+                <div class="flex items-center">
+                    <i class="${icon} text-${color}-500 mr-3"></i>
+                    <div>
+                        <p class="text-sm font-medium text-gray-900">${type === 'error' ? 'Lỗi!' : type === 'info' ? 'Thông tin' : 'Thành công!'}</p>
+                        <p class="text-xs text-gray-600">${message}</p>
+                    </div>
+                </div>
+            `;
+            
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCharts();
+            animateCounters();
+            animateHeaderCounters();
+            showToast('🚀 Admin Dashboard đã sẵn sàng!', 'success');
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                document.querySelector('input[placeholder*="Tìm kiếm"]').focus();
+            }
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', function(e) {
+            const createModal = document.getElementById('createModal');
+            if (e.target === createModal) {
+                closeCreateModal();
+            }
+        });
+    </script>
+</body>
+</html>

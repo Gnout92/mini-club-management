@@ -1,0 +1,1883 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang thành viên - Information Technologies</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <style>
+        /* Enhanced Glass Morphism */
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 12px 40px rgba(31, 38, 135, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .dark .glass-morphism {
+            background: rgba(17, 24, 39, 0.9);
+            border: 1px solid rgba(75, 85, 99, 0.4);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .glass-morphism:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 16px 50px rgba(31, 38, 135, 0.3);
+        }
+
+        .dark .glass-morphism:hover {
+            background: rgba(17, 24, 39, 0.95);
+            box-shadow: 0 16px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Enhanced Rainbow Gradients */
+        .rainbow-bg {
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c, #4facfe, #00f2fe, #43e97b, #38f9d7);
+            background-size: 400% 400%;
+            animation: rainbowShift 15s ease infinite;
+        }
+
+        @keyframes rainbowShift {
+            0%, 100% { background-position: 0% 50%; }
+            25% { background-position: 100% 50%; }
+            50% { background-position: 100% 100%; }
+            75% { background-position: 0% 100%; }
+        }
+
+        /* Enhanced Floating Animations */
+        .floating {
+            animation: smoothFloat 10s ease-in-out infinite;
+        }
+
+        @keyframes smoothFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(2deg); }
+            50% { transform: translateY(-15px) rotate(-1deg); }
+            75% { transform: translateY(-25px) rotate(1deg); }
+        }
+
+        /* Enhanced Interactive Cards */
+        .interactive-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.7s;
+        }
+
+        .interactive-card:hover::before {
+            left: 100%;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        /* Enhanced Progress Bars */
+        .skill-bar {
+            position: relative;
+            height: 10px;
+            background: linear-gradient(90deg, #e5e7eb, #f3f4f6);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4, #10b981);
+            border-radius: 10px;
+            transition: width 3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-progress::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Enhanced Glow Effects */
+        .glow-effect {
+            position: relative;
+        }
+
+        .glow-effect::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: inherit;
+            border-radius: inherit;
+            filter: blur(20px);
+            opacity: 0.5;
+            z-index: -1;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        /* Particles Background */
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        /* Enhanced Tab System */
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Enhanced Modal Styles */
+        .modal {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            transform: scale(0.8) translateY(-50px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        /* Enhanced Button Styles */
+        .btn-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-gradient::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            transition: left 0.3s ease;
+        }
+
+        .btn-gradient:hover::before {
+            left: 0;
+        }
+
+        .btn-gradient span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Enhanced Loading Animation */
+        .loading-spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top: 3px solid #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Enhanced Toast Notifications */
+        .toast {
+            transform: translateX(100%);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        /* Enhanced Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-hidden {
+                display: none;
+            }
+            
+            .interactive-card {
+                margin-bottom: 1rem;
+            }
+            
+            .modal-content {
+                margin: 1rem;
+                max-width: calc(100% - 2rem);
+            }
+        }
+
+        /* Enhanced Achievement Effects */
+        .achievement-glow {
+            animation: enhancedGlow 4s ease-in-out infinite;
+            position: relative;
+        }
+
+        @keyframes enhancedGlow {
+            0%, 100% { 
+                box-shadow: 0 0 15px rgba(251, 191, 36, 0.6), 0 0 30px rgba(251, 191, 36, 0.4); 
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 25px rgba(251, 191, 36, 0.9), 0 0 40px rgba(251, 191, 36, 0.6); 
+                transform: scale(1.03);
+            }
+        }
+
+        /* Status Pulse */
+        .pulse-slow {
+            animation: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Social Share Animation */
+        .share-btn {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .share-btn:hover {
+            transform: translateY(-2px) scale(1.1);
+        }
+    </style>
+</head>
+
+<body class="rainbow-bg min-h-screen transition-colors duration-500">
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+        <div class="glass-morphism rounded-2xl p-8 text-center">
+            <div class="loading-spinner mx-auto mb-4"></div>
+            <p class="text-white font-medium text-lg">Đang tải...</p>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="fixed top-5 right-5 z-50 space-y-3"></div>
+
+    <!-- Enhanced Header -->
+    <header class="sticky top-0 z-40 glass-morphism border-b border-white/30">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-xl glow-effect">
+                        <i class="fas fa-laptop-code text-white text-xl"></i>
+                    </div>
+                    <div class="hidden md:block">
+                        <h1 class="text-xl font-bold text-white">Information Technologies</h1>
+                        <p class="text-xs text-blue-100">Student Technology Club</p>
+                    </div>
+                </div>
+
+                <!-- Center Navigation -->
+                <nav class="hidden lg:flex space-x-2">
+                    <a href="index.html" class="px-4 py-2 text-white/80 hover:bg-white/20 rounded-xl transition-all duration-300 hover:scale-105">
+                        <i class="fas fa-home mr-2"></i>Trang chủ
+                    </a>
+                    <a href="events.html" class="px-4 py-2 text-white/80 hover:bg-white/20 rounded-xl transition-all duration-300 hover:scale-105">
+                        <i class="fas fa-calendar mr-2"></i>Sự kiện
+                    </a>
+                    <span class="px-4 py-2 bg-white/20 text-white rounded-xl shadow-lg">
+                        <i class="fas fa-user mr-2"></i>Thành viên
+                    </span>
+                </nav>
+
+                <!-- Right Side -->
+                <div class="flex items-center space-x-3">
+                    <!-- Dark Mode Toggle -->
+                    <button id="darkModeToggle" class="p-3 glass-morphism rounded-xl hover:scale-110 transition-all duration-300">
+                        <i class="fas fa-moon text-white"></i>
+                    </button>
+
+                    <!-- Notifications -->
+                    <button id="notificationBtn" class="p-3 glass-morphism rounded-xl hover:scale-110 transition-all duration-300 relative">
+                        <i class="fas fa-bell text-white"></i>
+                        <span class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold">3</span>
+                    </button>
+
+                    <!-- Profile -->
+                    <div class="relative">
+                        <button id="profileDropdown" class="flex items-center space-x-3 glass-morphism rounded-xl p-2 hover:scale-105 transition-all duration-300 group">
+                            <div class="relative">
+                                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=387&q=80" 
+                                     alt="Avatar" class="w-10 h-10 rounded-full object-cover border-2 border-white/50">
+                                <div class="absolute -bottom-1 -right-1 w-3 h-3 bg-green-400 border-2 border-white rounded-full pulse-slow"></div>
+                            </div>
+                            <span id="headerUserName" class="text-white font-medium mobile-hidden">Đang tải...</span>
+                            <i class="fas fa-chevron-down text-white/70 mobile-hidden transition-transform duration-300 group-hover:rotate-180"></i>
+                        </button>
+                        
+                        <!-- Profile Dropdown -->
+                        <div id="profileMenu" class="absolute right-0 mt-2 w-72 glass-morphism rounded-2xl shadow-2xl border border-white/30 hidden opacity-0 scale-95 transition-all duration-300 transform origin-top-right">
+                            <div class="p-6">
+                                <div class="flex items-center space-x-4 mb-4">
+                                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=387&q=80" 
+                                         alt="Avatar" class="w-14 h-14 rounded-full object-cover border-2 border-white/50">
+                                    <div>
+                                        <p id="profileDropdownName" class="font-semibold text-white text-lg">Đang tải...</p>
+                                        <p id="profileDropdownEmail" class="text-blue-100 text-sm">Đang tải...</p>
+                                    </div>
+                                </div>
+                                <hr class="border-white/20 mb-4">
+                                <div class="space-y-2">
+                                    <a href="#" class="flex items-center space-x-3 p-3 text-white hover:bg-white/10 rounded-xl transition-colors">
+                                        <i class="fas fa-user-cog w-5"></i>
+                                        <span>Cài đặt tài khoản</span>
+                                    </a>
+                                    <a href="#" class="flex items-center space-x-3 p-3 text-white hover:bg-white/10 rounded-xl transition-colors">
+                                        <i class="fas fa-palette w-5"></i>
+                                        <span>Giao diện</span>
+                                    </a>
+                                    <a href="#" class="flex items-center space-x-3 p-3 text-white hover:bg-white/10 rounded-xl transition-colors">
+                                        <i class="fas fa-question-circle w-5"></i>
+                                        <span>Trợ giúp</span>
+                                    </a>
+                                </div>
+                                <hr class="border-white/20 my-4">
+                                <a href="login.html" class="flex items-center space-x-3 p-3 text-red-300 hover:bg-red-500/20 rounded-xl transition-colors w-full">
+                                    <i class="fas fa-sign-out-alt w-5"></i>
+                                    <span>Đăng xuất</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Menu Toggle -->
+                    <button id="mobileMenuBtn" class="lg:hidden p-3 glass-morphism rounded-xl hover:scale-110 transition-all duration-300">
+                        <i class="fas fa-bars text-white"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="lg:hidden mt-4 glass-morphism rounded-2xl p-4 hidden opacity-0 -translate-y-full transition-all duration-300 transform">
+                <div class="space-y-3">
+                    <a href="index.html" class="flex items-center space-x-3 p-3 text-white hover:bg-white/10 rounded-xl transition-colors">
+                        <i class="fas fa-home"></i>
+                        <span>Trang chủ</span>
+                    </a>
+                    <a href="events.html" class="flex items-center space-x-3 p-3 text-white hover:bg-white/10 rounded-xl transition-colors">
+                        <i class="fas fa-calendar"></i>
+                        <span>Sự kiện</span>
+                    </a>
+                    <div class="flex items-center space-x-3 p-3 bg-white/20 text-white rounded-xl">
+                        <i class="fas fa-user"></i>
+                        <span>Thành viên</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Enhanced Hero Section -->
+    <section class="py-12 lg:py-20 relative overflow-hidden">
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="glass-morphism rounded-3xl p-8 md:p-16 text-center">
+                <div class="flex flex-col md:flex-row items-center justify-between">
+                    <div class="text-center md:text-left mb-6 md:mb-0">
+                        <h1 class="text-2xl md:text-4xl font-bold mb-3 text-white animate__animated animate__fadeInUp">
+                            Xin chào, <span id="dashboardGreeting">Đang tải...</span>!
+                            <span class="inline-block animate__animated animate__swing animate__infinite animate__slower">👋</span>
+                        </h1>
+                        <p class="text-blue-100 mb-4 text-lg">Chào mừng bạn trở lại với CLB Technology Students</p>
+                        <div class="flex flex-wrap gap-3 justify-center md:justify-start">
+                            <span class="px-4 py-2 bg-green-500/30 text-green-200 rounded-full text-sm font-medium backdrop-blur-sm">
+                                <i class="fas fa-circle text-green-400 mr-2 animate-pulse"></i>
+                                Trực tuyến
+                            </span>
+                            <span class="px-4 py-2 bg-purple-500/30 text-purple-200 rounded-full text-sm font-medium backdrop-blur-sm">
+                                <i class="fas fa-crown text-yellow-400 mr-2"></i>
+                                Thành viên Pro
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flex space-x-3">
+                        <button class="action-btn px-6 py-3 bg-white/20 hover:bg-white/30 text-white rounded-xl transition-all duration-300 hover:scale-105 backdrop-blur-sm">
+                            <i class="fas fa-edit mr-2"></i>
+                            Chỉnh sửa
+                        </button>
+                        <button id="shareProfileBtn" class="action-btn px-6 py-3 btn-gradient text-white rounded-xl transition-all duration-300 hover:scale-105 glow-effect">
+                            <span><i class="fas fa-share-alt mr-2"></i>Chia sẻ</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Enhanced Floating Shapes -->
+        <div class="absolute top-20 left-20 w-24 h-24 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full opacity-30 floating"></div>
+        <div class="absolute bottom-20 right-20 w-20 h-20 bg-gradient-to-br from-pink-400 to-red-600 rounded-2xl opacity-30 floating" style="animation-delay: -2s;"></div>
+        <div class="absolute top-1/2 right-32 w-16 h-16 bg-gradient-to-br from-green-400 to-blue-600 rounded-full opacity-30 floating" style="animation-delay: -4s;"></div>
+        <div class="absolute top-1/3 left-1/4 w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-600 rounded-full opacity-30 floating" style="animation-delay: -6s;"></div>
+    </section>
+
+    <!-- Enhanced Stats Cards -->
+    <section class="py-12 relative">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="interactive-card glass-morphism rounded-2xl p-6 text-center">
+                    <div class="text-3xl font-bold text-blue-400 counter mb-2" data-target="42">0</div>
+                    <p class="text-white font-medium">Dự án</p>
+                    <i class="fas fa-project-diagram text-blue-400 text-2xl mt-2 opacity-50"></i>
+                </div>
+                <div class="interactive-card glass-morphism rounded-2xl p-6 text-center">
+                    <div class="text-3xl font-bold text-green-400 counter mb-2" data-target="128">0</div>
+                    <p class="text-white font-medium">Sự kiện</p>
+                    <i class="fas fa-calendar-check text-green-400 text-2xl mt-2 opacity-50"></i>
+                </div>
+                <div class="interactive-card glass-morphism rounded-2xl p-6 text-center">
+                    <div class="text-3xl font-bold text-purple-400 counter mb-2" data-target="356">0</div>
+                    <p class="text-white font-medium">Điểm</p>
+                    <i class="fas fa-star text-purple-400 text-2xl mt-2 opacity-50"></i>
+                </div>
+                <div class="interactive-card glass-morphism rounded-2xl p-6 text-center">
+                    <div class="text-3xl font-bold text-orange-400 counter mb-2" data-target="15">0</div>
+                    <p class="text-white font-medium">Huy chương</p>
+                    <i class="fas fa-medal text-orange-400 text-2xl mt-2 opacity-50"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Tab Navigation -->
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <div class="glass-morphism rounded-3xl p-8">
+                <!-- Tab Buttons -->
+                <div class="flex flex-wrap gap-3 mb-8 p-3 glass-morphism rounded-2xl">
+                    <button class="tab-btn flex-1 px-6 py-4 bg-white/20 text-white rounded-xl font-medium transition-all duration-300 hover:scale-105" data-tab="dashboard">
+                        <i class="fas fa-chart-line mr-2"></i>
+                        <span class="hidden sm:inline">Dashboard</span>
+                    </button>
+                    <button class="tab-btn flex-1 px-6 py-4 text-white/70 hover:bg-white/10 hover:text-white rounded-xl font-medium transition-all duration-300 hover:scale-105" data-tab="activities">
+                        <i class="fas fa-clock mr-2"></i>
+                        <span class="hidden sm:inline">Hoạt động</span>
+                    </button>
+                    <button class="tab-btn flex-1 px-6 py-4 text-white/70 hover:bg-white/10 hover:text-white rounded-xl font-medium transition-all duration-300 hover:scale-105" data-tab="skills">
+                        <i class="fas fa-code mr-2"></i>
+                        <span class="hidden sm:inline">Kỹ năng</span>
+                    </button>
+                    <button class="tab-btn flex-1 px-6 py-4 text-white/70 hover:bg-white/10 hover:text-white rounded-xl font-medium transition-all duration-300 hover:scale-105" data-tab="achievements">
+                        <i class="fas fa-trophy mr-2"></i>
+                        <span class="hidden sm:inline">Thành tựu</span>
+                    </button>
+                </div>
+
+                <!-- Tab Contents -->
+                <div class="space-y-8">
+                    <!-- Dashboard Tab -->
+                    <div id="dashboard" class="tab-content active">
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            <!-- Profile Card -->
+                            <div class="glass-morphism rounded-2xl p-8 text-center">
+                                <div class="relative inline-block mb-6">
+                                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=387&q=80" 
+                                         alt="Profile" class="w-24 h-24 rounded-full mx-auto object-cover border-4 border-white/50 shadow-2xl">
+                                    <div class="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 border-4 border-white rounded-full flex items-center justify-center">
+                                        <i class="fas fa-check text-white text-xs"></i>
+                                    </div>
+                                </div>
+                                <h3 id="profileUserName" class="text-xl font-bold text-white mb-2">Đang tải...</h3>
+                                <p class="text-blue-300 font-medium mb-4">Thành viên Pro</p>
+                                
+                                <div class="flex justify-center mb-4">
+                                    <div class="flex text-yellow-400 text-xl">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="space-y-3 text-sm">
+                                    <div class="flex justify-between">
+                                        <span class="text-white/70">Cấp độ:</span>
+                                        <span class="font-bold text-purple-400">Pro</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-white/70">Điểm:</span>
+                                        <span class="font-bold text-green-400">356</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-white/70">Hạng:</span>
+                                        <span class="font-bold text-orange-400">#12</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Quick Actions -->
+                            <div class="glass-morphism rounded-2xl p-8">
+                                <h3 class="text-xl font-semibold text-white mb-6">
+                                    <i class="fas fa-bolt text-yellow-500 mr-3"></i>
+                                    Thao tác nhanh
+                                </h3>
+                                <div class="space-y-4">
+                                    <button id="createProjectBtn" class="w-full p-4 btn-gradient text-white rounded-xl transition-all duration-300 hover:scale-105 glow-effect">
+                                        <span><i class="fas fa-plus mr-3"></i>Tạo dự án mới</span>
+                                    </button>
+                                    <button id="createEventBtn" class="w-full p-4 glass-morphism text-white rounded-xl hover:scale-105 transition-all duration-300">
+                                        <i class="fas fa-calendar-plus mr-3"></i>
+                                        Tạo sự kiện
+                                    </button>
+                                    <button id="joinGroupBtn" class="w-full p-4 glass-morphism text-white rounded-xl hover:scale-105 transition-all duration-300">
+                                        <i class="fas fa-users mr-3"></i>
+                                        Tham gia nhóm
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Recent Activity -->
+                            <div class="glass-morphism rounded-2xl p-8">
+                                <h3 class="text-xl font-semibold text-white mb-6">
+                                    <i class="fas fa-history text-blue-400 mr-3"></i>
+                                    Hoạt động gần đây
+                                </h3>
+                                <div class="space-y-4">
+                                    <div class="flex items-center space-x-4 p-3 hover:bg-white/10 rounded-xl transition-colors">
+                                        <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-check text-white"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="font-medium text-white">Hoàn thành bài tập</p>
+                                            <p class="text-white/60 text-sm">2 giờ trước</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-4 p-3 hover:bg-white/10 rounded-xl transition-colors">
+                                        <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-calendar text-white"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="font-medium text-white">Tham gia workshop</p>
+                                            <p class="text-white/60 text-sm">1 ngày trước</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-4 p-3 hover:bg-white/10 rounded-xl transition-colors">
+                                        <div class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-trophy text-white"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="font-medium text-white">Nhận huy chương</p>
+                                            <p class="text-white/60 text-sm">3 ngày trước</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Activities Tab -->
+                    <div id="activities" class="tab-content">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <div class="glass-morphism rounded-2xl p-8">
+                                <h3 class="text-xl font-semibold text-white mb-6">
+                                    <i class="fas fa-chart-line text-blue-400 mr-3"></i>
+                                    Biểu đồ hoạt động
+                                </h3>
+                                <div class="h-80">
+                                    <canvas id="activityChart"></canvas>
+                                </div>
+                            </div>
+                            
+                            <div class="glass-morphism rounded-2xl p-8">
+                                <h3 class="text-xl font-semibold text-white mb-6">
+                                    <i class="fas fa-tasks text-green-400 mr-3"></i>
+                                    Nhiệm vụ đang thực hiện
+                                </h3>
+                                <div class="space-y-5">
+                                    <div class="flex items-center space-x-4 p-3 bg-white/5 rounded-xl">
+                                        <input type="checkbox" class="w-5 h-5 text-blue-600 rounded">
+                                        <span class="flex-1 text-white">Hoàn thành bài tập HTML/CSS</span>
+                                        <span class="text-xs bg-blue-500/30 text-blue-300 px-3 py-1 rounded-full">75%</span>
+                                    </div>
+                                    <div class="flex items-center space-x-4 p-3 bg-white/5 rounded-xl">
+                                        <input type="checkbox" class="w-5 h-5 text-blue-600 rounded">
+                                        <span class="flex-1 text-white">Tham gia workshop React</span>
+                                        <span class="text-xs bg-yellow-500/30 text-yellow-300 px-3 py-1 rounded-full">Pending</span>
+                                    </div>
+                                    <div class="flex items-center space-x-4 p-3 bg-white/5 rounded-xl">
+                                        <input type="checkbox" checked class="w-5 h-5 text-blue-600 rounded">
+                                        <span class="flex-1 text-white line-through">Nộp báo cáo tháng</span>
+                                        <span class="text-xs bg-green-500/30 text-green-300 px-3 py-1 rounded-full">Done</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Skills Tab -->
+                    <div id="skills" class="tab-content">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <div class="glass-morphism rounded-2xl p-8">
+                                <h3 class="text-xl font-semibold text-white mb-8">
+                                    <i class="fas fa-code text-blue-400 mr-3"></i>
+                                    Kỹ năng lập trình
+                                </h3>
+                                <div class="space-y-6">
+                                    <div>
+                                        <div class="flex justify-between mb-3">
+                                            <span class="font-medium text-white">JavaScript</span>
+                                            <span class="text-white/70">85%</span>
+                                        </div>
+                                        <div class="skill-bar">
+                                            <div class="skill-progress" data-width="85" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between mb-3">
+                                            <span class="font-medium text-white">React</span>
+                                            <span class="text-white/70">78%</span>
+                                        </div>
+                                        <div class="skill-bar">
+                                            <div class="skill-progress" data-width="78" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between mb-3">
+                                            <span class="font-medium text-white">Node.js</span>
+                                            <span class="text-white/70">72%</span>
+                                        </div>
+                                        <div class="skill-bar">
+                                            <div class="skill-progress" data-width="72" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between mb-3">
+                                            <span class="font-medium text-white">Python</span>
+                                            <span class="text-white/70">65%</span>
+                                        </div>
+                                        <div class="skill-bar">
+                                            <div class="skill-progress" data-width="65" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="glass-morphism rounded-2xl p-8">
+                                <h3 class="text-xl font-semibold text-white mb-8">
+                                    <i class="fas fa-tools text-purple-400 mr-3"></i>
+                                    Công cụ & Framework
+                                </h3>
+                                <div class="grid grid-cols-2 gap-6">
+                                    <div class="text-center p-6 glass-morphism rounded-2xl hover:scale-105 transition-transform duration-300">
+                                        <i class="fab fa-react text-4xl text-blue-400 mb-3"></i>
+                                        <p class="font-medium text-white">React</p>
+                                    </div>
+                                    <div class="text-center p-6 glass-morphism rounded-2xl hover:scale-105 transition-transform duration-300">
+                                        <i class="fab fa-vuejs text-4xl text-green-400 mb-3"></i>
+                                        <p class="font-medium text-white">Vue.js</p>
+                                    </div>
+                                    <div class="text-center p-6 glass-morphism rounded-2xl hover:scale-105 transition-transform duration-300">
+                                        <i class="fab fa-node-js text-4xl text-green-500 mb-3"></i>
+                                        <p class="font-medium text-white">Node.js</p>
+                                    </div>
+                                    <div class="text-center p-6 glass-morphism rounded-2xl hover:scale-105 transition-transform duration-300">
+                                        <i class="fab fa-docker text-4xl text-blue-500 mb-3"></i>
+                                        <p class="font-medium text-white">Docker</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Achievements Tab -->
+                    <div id="achievements" class="tab-content">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <div class="achievement-card interactive-card glass-morphism rounded-2xl p-8 text-center achievement-glow cursor-pointer">
+                                <div class="w-20 h-20 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <i class="fas fa-trophy text-white text-3xl"></i>
+                                </div>
+                                <h4 class="text-xl font-semibold text-white mb-3">Nhà vô địch Code</h4>
+                                <p class="text-white/70 mb-4">Giành giải nhất cuộc thi lập trình</p>
+                                <span class="inline-block bg-yellow-400/20 text-yellow-300 text-sm px-4 py-2 rounded-full font-medium">Legendary</span>
+                            </div>
+
+                            <div class="achievement-card interactive-card glass-morphism rounded-2xl p-8 text-center cursor-pointer">
+                                <div class="w-20 h-20 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <i class="fas fa-code text-white text-3xl"></i>
+                                </div>
+                                <h4 class="text-xl font-semibold text-white mb-3">Master Coder</h4>
+                                <p class="text-white/70 mb-4">Hoàn thành 100+ bài tập coding</p>
+                                <span class="inline-block bg-blue-400/20 text-blue-300 text-sm px-4 py-2 rounded-full font-medium">Epic</span>
+                            </div>
+
+                            <div class="achievement-card interactive-card glass-morphism rounded-2xl p-8 text-center cursor-pointer">
+                                <div class="w-20 h-20 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <i class="fas fa-users text-white text-3xl"></i>
+                                </div>
+                                <h4 class="text-xl font-semibold text-white mb-3">Team Player</h4>
+                                <p class="text-white/70 mb-4">Tham gia 20+ dự án nhóm</p>
+                                <span class="inline-block bg-green-400/20 text-green-300 text-sm px-4 py-2 rounded-full font-medium">Rare</span>
+                            </div>
+
+                            <div class="achievement-card interactive-card glass-morphism rounded-2xl p-8 text-center cursor-pointer">
+                                <div class="w-20 h-20 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <i class="fas fa-lightbulb text-white text-3xl"></i>
+                                </div>
+                                <h4 class="text-xl font-semibold text-white mb-3">Innovator</h4>
+                                <p class="text-white/70 mb-4">Tạo ra 5+ ý tưởng sáng tạo</p>
+                                <span class="inline-block bg-purple-400/20 text-purple-300 text-sm px-4 py-2 rounded-full font-medium">Rare</span>
+                            </div>
+
+                            <div class="achievement-card interactive-card glass-morphism rounded-2xl p-8 text-center cursor-pointer">
+                                <div class="w-20 h-20 bg-gradient-to-r from-red-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <i class="fas fa-fire text-white text-3xl"></i>
+                                </div>
+                                <h4 class="text-xl font-semibold text-white mb-3">Hot Streak</h4>
+                                <p class="text-white/70 mb-4">30 ngày liên tục hoạt động</p>
+                                <span class="inline-block bg-red-400/20 text-red-300 text-sm px-4 py-2 rounded-full font-medium">Common</span>
+                            </div>
+
+                            <div class="achievement-card interactive-card glass-morphism rounded-2xl p-8 text-center cursor-pointer opacity-50">
+                                <div class="w-20 h-20 bg-gray-400 rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <i class="fas fa-lock text-white text-3xl"></i>
+                                </div>
+                                <h4 class="text-xl font-semibold text-white mb-3">Mentor</h4>
+                                <p class="text-white/70 mb-4">Hướng dẫn 10+ thành viên mới</p>
+                                <span class="inline-block bg-gray-400/20 text-gray-300 text-sm px-4 py-2 rounded-full font-medium">Locked</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Create Project Modal -->
+    <div id="createProjectModal" class="modal fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 invisible">
+        <div class="modal-content glass-morphism rounded-3xl p-8 w-full max-w-2xl mx-4">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-white">
+                    <i class="fas fa-plus-circle text-blue-400 mr-3"></i>
+                    Tạo dự án mới
+                </h2>
+                <button id="closeProjectModal" class="text-white/70 hover:text-white transition-colors">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            
+            <form id="createProjectForm" class="space-y-6">
+                <div>
+                    <label class="block text-white font-medium mb-2">Tên dự án *</label>
+                    <input type="text" id="projectName" class="w-full p-4 glass-morphism text-white placeholder-white/50 rounded-xl border border-white/20 focus:border-blue-400 transition-colors" placeholder="Nhập tên dự án...">
+                </div>
+                
+                <div>
+                    <label class="block text-white font-medium mb-2">Mô tả dự án</label>
+                    <textarea id="projectDescription" rows="4" class="w-full p-4 glass-morphism text-white placeholder-white/50 rounded-xl border border-white/20 focus:border-blue-400 transition-colors" placeholder="Mô tả chi tiết về dự án..."></textarea>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-white font-medium mb-2">Công nghệ</label>
+                        <select id="projectTech" class="w-full p-4 glass-morphism text-white rounded-xl border border-white/20 focus:border-blue-400 transition-colors">
+                            <option value="">Chọn công nghệ chính</option>
+                            <option value="react">React</option>
+                            <option value="vue">Vue.js</option>
+                            <option value="angular">Angular</option>
+                            <option value="nodejs">Node.js</option>
+                            <option value="python">Python</option>
+                            <option value="java">Java</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-white font-medium mb-2">Thời gian dự kiến</label>
+                        <select id="projectDuration" class="w-full p-4 glass-morphism text-white rounded-xl border border-white/20 focus:border-blue-400 transition-colors">
+                            <option value="">Chọn thời gian</option>
+                            <option value="1-week">1 tuần</option>
+                            <option value="2-weeks">2 tuần</option>
+                            <option value="1-month">1 tháng</option>
+                            <option value="3-months">3 tháng</option>
+                            <option value="6-months">6 tháng</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <button type="submit" class="flex-1 btn-gradient text-white py-4 rounded-xl font-medium transition-all duration-300 hover:scale-105">
+                        <span><i class="fas fa-rocket mr-2"></i>Tạo dự án</span>
+                    </button>
+                    <button type="button" id="cancelProject" class="flex-1 glass-morphism text-white py-4 rounded-xl font-medium transition-all duration-300 hover:scale-105">
+                        <i class="fas fa-times mr-2"></i>Hủy bỏ
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Event Modal -->
+    <div id="createEventModal" class="modal fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 invisible">
+        <div class="modal-content glass-morphism rounded-3xl p-8 w-full max-w-2xl mx-4">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-white">
+                    <i class="fas fa-calendar-plus text-green-400 mr-3"></i>
+                    Tạo sự kiện mới
+                </h2>
+                <button id="closeEventModal" class="text-white/70 hover:text-white transition-colors">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            
+            <form id="createEventForm" class="space-y-6">
+                <div>
+                    <label class="block text-white font-medium mb-2">Tên sự kiện *</label>
+                    <input type="text" id="eventName" class="w-full p-4 glass-morphism text-white placeholder-white/50 rounded-xl border border-white/20 focus:border-green-400 transition-colors" placeholder="Nhập tên sự kiện...">
+                </div>
+                
+                <div>
+                    <label class="block text-white font-medium mb-2">Mô tả sự kiện</label>
+                    <textarea id="eventDescription" rows="4" class="w-full p-4 glass-morphism text-white placeholder-white/50 rounded-xl border border-white/20 focus:border-green-400 transition-colors" placeholder="Mô tả chi tiết về sự kiện..."></textarea>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-white font-medium mb-2">Ngày tổ chức</label>
+                        <input type="date" id="eventDate" class="w-full p-4 glass-morphism text-white rounded-xl border border-white/20 focus:border-green-400 transition-colors">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-white font-medium mb-2">Thời gian</label>
+                        <input type="time" id="eventTime" class="w-full p-4 glass-morphism text-white rounded-xl border border-white/20 focus:border-green-400 transition-colors">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-white font-medium mb-2">Địa điểm</label>
+                    <input type="text" id="eventLocation" class="w-full p-4 glass-morphism text-white placeholder-white/50 rounded-xl border border-white/20 focus:border-green-400 transition-colors" placeholder="Nhập địa điểm tổ chức...">
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <button type="submit" class="flex-1 btn-gradient text-white py-4 rounded-xl font-medium transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                        <span><i class="fas fa-calendar-check mr-2"></i>Tạo sự kiện</span>
+                    </button>
+                    <button type="button" id="cancelEvent" class="flex-1 glass-morphism text-white py-4 rounded-xl font-medium transition-all duration-300 hover:scale-105">
+                        <i class="fas fa-times mr-2"></i>Hủy bỏ
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Join Group Modal -->
+    <div id="joinGroupModal" class="modal fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 invisible">
+        <div class="modal-content glass-morphism rounded-3xl p-8 w-full max-w-2xl mx-4">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-white">
+                    <i class="fas fa-users text-purple-400 mr-3"></i>
+                    Tham gia nhóm
+                </h2>
+                <button id="closeGroupModal" class="text-white/70 hover:text-white transition-colors">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-6">
+                <div class="text-center text-white/80 mb-6">
+                    <p>Chọn nhóm bạn muốn tham gia hoặc tìm kiếm nhóm phù hợp</p>
+                </div>
+                
+                <div>
+                    <input type="text" id="searchGroup" class="w-full p-4 glass-morphism text-white placeholder-white/50 rounded-xl border border-white/20 focus:border-purple-400 transition-colors" placeholder="Tìm kiếm nhóm...">
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="glass-morphism rounded-xl p-6 hover:bg-white/10 transition-colors cursor-pointer group">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-laptop-code text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-semibold">Frontend Development</h4>
+                                    <p class="text-white/70 text-sm">156 thành viên • React, Vue, Angular</p>
+                                </div>
+                            </div>
+                            <button class="px-4 py-2 btn-gradient text-white rounded-lg font-medium transition-all duration-300 hover:scale-105">
+                                <span>Tham gia</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-morphism rounded-xl p-6 hover:bg-white/10 transition-colors cursor-pointer group">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-database text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-semibold">Backend Development</h4>
+                                    <p class="text-white/70 text-sm">89 thành viên • Node.js, Python, Java</p>
+                                </div>
+                            </div>
+                            <button class="px-4 py-2 btn-gradient text-white rounded-lg font-medium transition-all duration-300 hover:scale-105">
+                                <span>Tham gia</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-morphism rounded-xl p-6 hover:bg-white/10 transition-colors cursor-pointer group">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-600 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-mobile-alt text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-semibold">Mobile Development</h4>
+                                    <p class="text-white/70 text-sm">67 thành viên • React Native, Flutter</p>
+                                </div>
+                            </div>
+                            <button class="px-4 py-2 btn-gradient text-white rounded-lg font-medium transition-all duration-300 hover:scale-105">
+                                <span>Tham gia</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-center pt-4">
+                    <button id="closeGroupBtn" class="px-8 py-3 glass-morphism text-white rounded-xl font-medium transition-all duration-300 hover:scale-105">
+                        <i class="fas fa-times mr-2"></i>Đóng
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div id="shareModal" class="modal fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 invisible">
+        <div class="modal-content glass-morphism rounded-3xl p-8 w-full max-w-lg mx-4">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-white">
+                    <i class="fas fa-share-alt text-blue-400 mr-3"></i>
+                    Chia sẻ hồ sơ
+                </h2>
+                <button id="closeShareModal" class="text-white/70 hover:text-white transition-colors">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-6">
+                <div class="text-center">
+                    <p class="text-white/80 mb-4">Chia sẻ hồ sơ của bạn đến bạn bè và đồng nghiệp</p>
+                    <div class="glass-morphism rounded-xl p-4 mb-6">
+                        <p class="text-white font-mono text-sm" id="profileUrl">https://techclub.com/profile/user123</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <button class="share-btn flex items-center justify-center space-x-3 p-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition-all duration-300">
+                        <i class="fab fa-facebook-f text-xl"></i>
+                        <span>Facebook</span>
+                    </button>
+                    <button class="share-btn flex items-center justify-center space-x-3 p-4 bg-blue-400 hover:bg-blue-500 text-white rounded-xl transition-all duration-300">
+                        <i class="fab fa-twitter text-xl"></i>
+                        <span>Twitter</span>
+                    </button>
+                    <button class="share-btn flex items-center justify-center space-x-3 p-4 bg-blue-700 hover:bg-blue-800 text-white rounded-xl transition-all duration-300">
+                        <i class="fab fa-linkedin-in text-xl"></i>
+                        <span>LinkedIn</span>
+                    </button>
+                    <button id="copyProfileUrl" class="share-btn flex items-center justify-center space-x-3 p-4 glass-morphism text-white rounded-xl transition-all duration-300">
+                        <i class="fas fa-copy text-xl"></i>
+                        <span>Copy Link</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Panel -->
+    <div id="notificationPanel" class="fixed top-20 right-5 w-96 glass-morphism rounded-2xl shadow-2xl border border-white/30 z-50 hidden opacity-0 scale-95 transition-all duration-300 transform origin-top-right">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-xl font-semibold text-white">
+                    <i class="fas fa-bell text-blue-400 mr-3"></i>
+                    Thông báo
+                </h3>
+                <button id="closeNotifications" class="text-white/70 hover:text-white transition-colors">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="space-y-4 max-h-96 overflow-y-auto">
+                <div class="p-4 glass-morphism rounded-xl">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-info text-white"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="font-medium text-white">Workshop mới</p>
+                            <p class="text-white/70 text-sm">Workshop React Native sẽ được tổ chức vào cuối tuần này</p>
+                            <p class="text-white/50 text-xs mt-2">2 giờ trước</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="p-4 glass-morphism rounded-xl">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-check text-white"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="font-medium text-white">Bài tập đã được duyệt</p>
+                            <p class="text-white/70 text-sm">Bài tập JavaScript của bạn đã được giảng viên phê duyệt</p>
+                            <p class="text-white/50 text-xs mt-2">4 giờ trước</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="p-4 glass-morphism rounded-xl">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-star text-white"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="font-medium text-white">Chúc mừng!</p>
+                            <p class="text-white/70 text-sm">Bạn đã nhận được huy chương "Team Player"</p>
+                            <p class="text-white/50 text-xs mt-2">1 ngày trước</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced Footer -->
+    <footer class="py-16 mt-24">
+        <div class="container mx-auto px-4">
+            <div class="glass-morphism rounded-3xl p-12">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left">
+                    <div class="col-span-1 md:col-span-2">
+                        <div class="flex items-center space-x-4 justify-center md:justify-start mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center glow-effect">
+                                <i class="fas fa-laptop-code text-white text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-white">Information Technologies</h3>
+                                <p class="text-blue-200">Student Technology Club</p>
+                            </div>
+                        </div>
+                        <p class="text-white/70 mb-6 max-w-md">
+                            Nơi kết nối các sinh viên đam mê công nghệ, chia sẻ kiến thức và phát triển kỹ năng lập trình.
+                        </p>
+                        <div class="flex space-x-4 justify-center md:justify-start">
+                            <a href="#" class="share-btn w-12 h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-xl flex items-center justify-center transition-colors">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="share-btn w-12 h-12 bg-blue-400 hover:bg-blue-500 text-white rounded-xl flex items-center justify-center transition-colors">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="share-btn w-12 h-12 bg-purple-600 hover:bg-purple-700 text-white rounded-xl flex items-center justify-center transition-colors">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="share-btn w-12 h-12 bg-gray-800 hover:bg-gray-900 text-white rounded-xl flex items-center justify-center transition-colors">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-xl font-semibold text-white mb-6">Liên kết</h4>
+                        <ul class="space-y-3">
+                            <li><a href="#" class="text-white/70 hover:text-white transition-colors">Giới thiệu</a></li>
+                            <li><a href="#" class="text-white/70 hover:text-white transition-colors">Sự kiện</a></li>
+                            <li><a href="#" class="text-white/70 hover:text-white transition-colors">Dự án</a></li>
+                            <li><a href="#" class="text-white/70 hover:text-white transition-colors">Liên hệ</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-xl font-semibold text-white mb-6">Hỗ trợ</h4>
+                        <ul class="space-y-3">
+                            <li><a href="#" class="text-white/70 hover:text-white transition-colors">Tài liệu</a></li>
+                            <li><a href="#" class="text-white/70 hover:text-white transition-colors">FAQ</a></li>
+                            <li><a href="#" class="text-white/70 hover:text-white transition-colors">Báo lỗi</a></li>
+                            <li><a href="#" class="text-white/70 hover:text-white transition-colors">Phản hồi</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <hr class="border-white/20 my-12">
+                
+                <div class="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+                    <p class="text-white/70 mb-4 md:mb-0 text-lg">
+                        © 2024 Information Technologies Club. All rights reserved.
+                    </p>
+                    <div class="flex space-x-8">
+                        <a href="#" class="text-white/70 hover:text-white transition-colors">Privacy Policy</a>
+                        <a href="#" class="text-white/70 hover:text-white transition-colors">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        class MemberDashboard {
+            constructor() {
+                // Khởi tạo tên người dùng từ email Gmail
+                this.initUserName();
+                
+                this.init();
+                this.bindEvents();
+                this.setupAnimations();
+                this.setupModals();
+            }
+
+            initUserName() {
+                // Lấy email từ localStorage hoặc URL parameter
+                let userEmail = localStorage.getItem('userEmail');
+                
+                // Nếu không có trong localStorage, thử lấy từ URL parameter
+                if (!userEmail) {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    userEmail = urlParams.get('email');
+                }
+                
+                // Nếu vẫn không có email, redirect về trang login
+                if (!userEmail) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+                
+                // Trích xuất tên từ email Gmail
+                this.userName = this.extractNameFromEmail(userEmail);
+                this.userEmail = userEmail;
+                
+                // Cập nhật UI với tên người dùng
+                this.updateUserInterface();
+            }
+
+            extractNameFromEmail(email) {
+                // Lấy phần trước @ từ email
+                const namePart = email.split('@')[0];
+                
+                // Thay thế dấu chấm và dấu gạch dưới bằng khoảng trắng
+                const cleanName = namePart.replace(/[._-]/g, ' ');
+                
+                // Viết hoa chữ cái đầu của mỗi từ
+                return cleanName.split(' ')
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                    .join(' ');
+            }
+
+            updateUserInterface() {
+                // Cập nhật tất cả các element hiển thị tên người dùng
+                const elements = {
+                    'headerUserName': this.userName,
+                    'dashboardGreeting': this.userName,
+                    'profileUserName': this.userName,
+                    'profileDropdownName': this.userName,
+                    'profileDropdownEmail': this.userEmail
+                };
+                
+                Object.keys(elements).forEach(elementId => {
+                    const element = document.getElementById(elementId);
+                    if (element) {
+                        element.textContent = elements[elementId];
+                    }
+                });
+                
+                // Cập nhật URL chia sẻ profile
+                const profileUrl = document.getElementById('profileUrl');
+                if (profileUrl) {
+                    profileUrl.textContent = `https://techclub.com/profile/${this.userName.toLowerCase().replace(/\s+/g, '')}`;
+                }
+                
+                // Lưu thông tin vào localStorage cho lần sau
+                localStorage.setItem('userEmail', this.userEmail);
+                localStorage.setItem('userName', this.userName);
+            }
+
+            init() {
+                // Initialize AOS with enhanced settings
+                AOS.init({
+                    duration: 1000,
+                    easing: 'ease-out-cubic',
+                    once: true,
+                    offset: 100
+                });
+
+                // Initialize particles
+                this.initParticles();
+                
+                // Set up dark mode
+                this.initDarkMode();
+                
+                // Initialize counters
+                setTimeout(() => this.animateCounters(), 1500);
+                
+                // Welcome toast với tên động
+                setTimeout(() => this.showToast(`🎉 Chào mừng trở lại, ${this.userName}!`, 'success'), 1000);
+            }
+
+            initParticles() {
+                if (window.particlesJS) {
+                    particlesJS('particles-js', {
+                        particles: {
+                            number: { 
+                                value: 100, 
+                                density: { enable: true, value_area: 1000 } 
+                            },
+                            color: { value: ['#667eea', '#764ba2', '#f093fb', '#f5576c', '#4facfe', '#00f2fe'] },
+                            shape: { 
+                                type: 'circle',
+                                stroke: { width: 0, color: '#000000' }
+                            },
+                            opacity: { 
+                                value: 0.8, 
+                                random: true,
+                                anim: { enable: true, speed: 1.5, opacity_min: 0.2, sync: false }
+                            },
+                            size: { 
+                                value: 4, 
+                                random: true,
+                                anim: { enable: true, speed: 3, size_min: 0.3, sync: false }
+                            },
+                            line_linked: { 
+                                enable: true, 
+                                distance: 200, 
+                                color: '#ffffff', 
+                                opacity: 0.6, 
+                                width: 1.5 
+                            },
+                            move: { 
+                                enable: true, 
+                                speed: 3, 
+                                direction: 'none', 
+                                random: true, 
+                                straight: false, 
+                                out_mode: 'out', 
+                                bounce: false 
+                            }
+                        },
+                        interactivity: {
+                            detect_on: 'canvas',
+                            events: { 
+                                onhover: { enable: true, mode: 'grab' }, 
+                                onclick: { enable: true, mode: 'push' }, 
+                                resize: true 
+                            },
+                            modes: { 
+                                grab: { distance: 180, line_linked: { opacity: 1 } },
+                                push: { particles_nb: 6 },
+                                remove: { particles_nb: 3 }
+                            }
+                        },
+                        retina_detect: true
+                    });
+                }
+            }
+
+            initDarkMode() {
+                const darkModeToggle = document.getElementById('darkModeToggle');
+                const html = document.documentElement;
+                
+                // Load saved theme
+                const isDarkMode = localStorage.getItem('darkMode') === 'true';
+                if (isDarkMode) {
+                    html.classList.add('dark');
+                }
+
+                // Toggle functionality
+                darkModeToggle?.addEventListener('click', () => {
+                    html.classList.toggle('dark');
+                    const isDark = html.classList.contains('dark');
+                    localStorage.setItem('darkMode', isDark);
+                    this.showToast(
+                        isDark ? '🌙 Đã bật chế độ tối' : '☀️ Đã tắt chế độ tối', 
+                        'success'
+                    );
+                });
+            }
+
+            setupModals() {
+                // Create Project Modal
+                const createProjectBtn = document.getElementById('createProjectBtn');
+                const createProjectModal = document.getElementById('createProjectModal');
+                const closeProjectModal = document.getElementById('closeProjectModal');
+                const cancelProject = document.getElementById('cancelProject');
+                const createProjectForm = document.getElementById('createProjectForm');
+
+                createProjectBtn?.addEventListener('click', () => this.showModal('createProjectModal'));
+                closeProjectModal?.addEventListener('click', () => this.hideModal('createProjectModal'));
+                cancelProject?.addEventListener('click', () => this.hideModal('createProjectModal'));
+                
+                createProjectForm?.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleCreateProject();
+                });
+
+                // Create Event Modal
+                const createEventBtn = document.getElementById('createEventBtn');
+                const createEventModal = document.getElementById('createEventModal');
+                const closeEventModal = document.getElementById('closeEventModal');
+                const cancelEvent = document.getElementById('cancelEvent');
+                const createEventForm = document.getElementById('createEventForm');
+
+                createEventBtn?.addEventListener('click', () => this.showModal('createEventModal'));
+                closeEventModal?.addEventListener('click', () => this.hideModal('createEventModal'));
+                cancelEvent?.addEventListener('click', () => this.hideModal('createEventModal'));
+                
+                createEventForm?.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleCreateEvent();
+                });
+
+                // Join Group Modal
+                const joinGroupBtn = document.getElementById('joinGroupBtn');
+                const joinGroupModal = document.getElementById('joinGroupModal');
+                const closeGroupModal = document.getElementById('closeGroupModal');
+                const closeGroupBtn = document.getElementById('closeGroupBtn');
+
+                joinGroupBtn?.addEventListener('click', () => this.showModal('joinGroupModal'));
+                closeGroupModal?.addEventListener('click', () => this.hideModal('joinGroupModal'));
+                closeGroupBtn?.addEventListener('click', () => this.hideModal('joinGroupModal'));
+
+                // Share Modal
+                const shareProfileBtn = document.getElementById('shareProfileBtn');
+                const shareModal = document.getElementById('shareModal');
+                const closeShareModal = document.getElementById('closeShareModal');
+                const copyProfileUrl = document.getElementById('copyProfileUrl');
+
+                shareProfileBtn?.addEventListener('click', () => this.showModal('shareModal'));
+                closeShareModal?.addEventListener('click', () => this.hideModal('shareModal'));
+                
+                copyProfileUrl?.addEventListener('click', () => this.copyToClipboard());
+
+                // Close modals when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('modal')) {
+                        this.hideAllModals();
+                    }
+                });
+            }
+
+            showModal(modalId) {
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.classList.add('show');
+                    modal.classList.remove('opacity-0', 'invisible');
+                    document.body.style.overflow = 'hidden';
+                }
+            }
+
+            hideModal(modalId) {
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.classList.remove('show');
+                    modal.classList.add('opacity-0', 'invisible');
+                    document.body.style.overflow = 'auto';
+                }
+            }
+
+            hideAllModals() {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    modal.classList.remove('show');
+                    modal.classList.add('opacity-0', 'invisible');
+                });
+                document.body.style.overflow = 'auto';
+            }
+
+            handleCreateProject() {
+                const projectName = document.getElementById('projectName').value;
+                const projectDescription = document.getElementById('projectDescription').value;
+                const projectTech = document.getElementById('projectTech').value;
+                const projectDuration = document.getElementById('projectDuration').value;
+
+                if (!projectName.trim()) {
+                    this.showToast('❌ Vui lòng nhập tên dự án!', 'error');
+                    return;
+                }
+
+                // Simulate project creation
+                this.showLoadingOverlay();
+                
+                setTimeout(() => {
+                    this.hideLoadingOverlay();
+                    this.hideModal('createProjectModal');
+                    this.showToast(`🚀 Dự án "${projectName}" đã được tạo thành công!`, 'success');
+                    
+                    // Reset form
+                    document.getElementById('createProjectForm').reset();
+                }, 2000);
+            }
+
+            handleCreateEvent() {
+                const eventName = document.getElementById('eventName').value;
+                const eventDescription = document.getElementById('eventDescription').value;
+                const eventDate = document.getElementById('eventDate').value;
+                const eventTime = document.getElementById('eventTime').value;
+                const eventLocation = document.getElementById('eventLocation').value;
+
+                if (!eventName.trim()) {
+                    this.showToast('❌ Vui lòng nhập tên sự kiện!', 'error');
+                    return;
+                }
+
+                // Simulate event creation
+                this.showLoadingOverlay();
+                
+                setTimeout(() => {
+                    this.hideLoadingOverlay();
+                    this.hideModal('createEventModal');
+                    this.showToast(`🎉 Sự kiện "${eventName}" đã được tạo thành công!`, 'success');
+                    
+                    // Reset form
+                    document.getElementById('createEventForm').reset();
+                }, 2000);
+            }
+
+            copyToClipboard() {
+                const profileUrl = document.getElementById('profileUrl').textContent;
+                
+                navigator.clipboard.writeText(profileUrl).then(() => {
+                    this.showToast('📋 Đã sao chép link hồ sơ!', 'success');
+                }).catch(() => {
+                    this.showToast('❌ Không thể sao chép link!', 'error');
+                });
+            }
+
+            bindEvents() {
+                // Enhanced tab functionality
+                this.setupTabs();
+                
+                // Enhanced mobile menu
+                this.setupMobileMenu();
+                
+                // Enhanced profile dropdown
+                this.setupProfileDropdown();
+                
+                // Enhanced notifications
+                this.setupNotifications();
+                
+                // Enhanced interactive elements
+                this.setupInteractiveElements();
+                
+                // Keyboard shortcuts
+                this.setupKeyboardShortcuts();
+            }
+
+            setupTabs() {
+                const tabButtons = document.querySelectorAll('.tab-btn');
+                const tabContents = document.querySelectorAll('.tab-content');
+
+                tabButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const targetTab = button.getAttribute('data-tab');
+                        
+                        // Add loading state
+                        button.classList.add('loading');
+                        
+                        setTimeout(() => {
+                            // Update tab buttons
+                            tabButtons.forEach(btn => {
+                                btn.classList.remove('bg-white/20', 'text-white', 'loading');
+                                btn.classList.add('text-white/70', 'hover:bg-white/10', 'hover:text-white');
+                            });
+                            
+                            button.classList.add('bg-white/20', 'text-white');
+                            button.classList.remove('text-white/70', 'hover:bg-white/10', 'hover:text-white');
+                            
+                            // Update tab contents with smooth transition
+                            tabContents.forEach(content => {
+                                content.classList.remove('active');
+                            });
+                            
+                            const targetContent = document.getElementById(targetTab);
+                            if (targetContent) {
+                                targetContent.classList.add('active');
+                                
+                                // Initialize specific content
+                                if (targetTab === 'activities') {
+                                    this.initActivityChart();
+                                }
+                                if (targetTab === 'skills') {
+                                    this.animateSkillBars();
+                                }
+                            }
+                        }, 300);
+                    });
+                });
+            }
+
+            setupMobileMenu() {
+                const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+                const mobileMenu = document.getElementById('mobileMenu');
+
+                mobileMenuBtn?.addEventListener('click', () => {
+                    const isHidden = mobileMenu?.classList.contains('hidden');
+                    
+                    if (isHidden) {
+                        mobileMenu.classList.remove('hidden');
+                        setTimeout(() => {
+                            mobileMenu.classList.remove('-translate-y-full', 'opacity-0');
+                        }, 10);
+                    } else {
+                        mobileMenu.classList.add('-translate-y-full', 'opacity-0');
+                        setTimeout(() => {
+                            mobileMenu.classList.add('hidden');
+                        }, 300);
+                    }
+                });
+            }
+
+            setupProfileDropdown() {
+                const profileDropdown = document.getElementById('profileDropdown');
+                const profileMenu = document.getElementById('profileMenu');
+
+                profileDropdown?.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isHidden = profileMenu?.classList.contains('hidden');
+                    
+                    if (isHidden) {
+                        profileMenu.classList.remove('hidden');
+                        setTimeout(() => {
+                            profileMenu.classList.remove('opacity-0', 'scale-95');
+                            profileMenu.classList.add('opacity-100', 'scale-100');
+                        }, 10);
+                    } else {
+                        profileMenu.classList.remove('opacity-100', 'scale-100');
+                        profileMenu.classList.add('opacity-0', 'scale-95');
+                        setTimeout(() => {
+                            profileMenu.classList.add('hidden');
+                        }, 200);
+                    }
+                });
+            }
+
+            setupNotifications() {
+                const notificationBtn = document.getElementById('notificationBtn');
+                const notificationPanel = document.getElementById('notificationPanel');
+                const closeNotifications = document.getElementById('closeNotifications');
+
+                notificationBtn?.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isHidden = notificationPanel?.classList.contains('hidden');
+                    
+                    if (isHidden) {
+                        notificationPanel.classList.remove('hidden');
+                        setTimeout(() => {
+                            notificationPanel.classList.remove('scale-95', 'opacity-0');
+                            notificationPanel.classList.add('scale-100', 'opacity-100');
+                        }, 10);
+                    } else {
+                        this.hideNotifications();
+                    }
+                });
+
+                closeNotifications?.addEventListener('click', () => {
+                    this.hideNotifications();
+                });
+
+                // Close on outside click
+                document.addEventListener('click', (e) => {
+                    if (!notificationPanel?.contains(e.target) && !notificationBtn?.contains(e.target)) {
+                        this.hideNotifications();
+                    }
+                    if (!document.getElementById('profileMenu')?.contains(e.target) && 
+                        !document.getElementById('profileDropdown')?.contains(e.target)) {
+                        const profileMenu = document.getElementById('profileMenu');
+                        profileMenu?.classList.add('hidden', 'opacity-0', 'scale-95');
+                        profileMenu?.classList.remove('opacity-100', 'scale-100');
+                    }
+                });
+            }
+
+            hideNotifications() {
+                const notificationPanel = document.getElementById('notificationPanel');
+                notificationPanel?.classList.remove('scale-100', 'opacity-100');
+                notificationPanel?.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    notificationPanel?.classList.add('hidden');
+                }, 300);
+            }
+
+            setupInteractiveElements() {
+                // Enhanced button interactions
+                document.addEventListener('click', (e) => {
+                    // Achievement interaction
+                    if (e.target.closest('.achievement-card')) {
+                        const card = e.target.closest('.achievement-card');
+                        card.classList.add('animate__animated', 'animate__pulse');
+                        setTimeout(() => {
+                            card.classList.remove('animate__animated', 'animate__pulse');
+                        }, 1000);
+                    }
+
+                    // Join group buttons
+                    if (e.target.closest('.glass-morphism .btn-gradient')) {
+                        const btn = e.target.closest('.btn-gradient');
+                        if (btn.textContent.includes('Tham gia')) {
+                            btn.innerHTML = '<span><i class="fas fa-check mr-2"></i>Đã tham gia</span>';
+                            btn.classList.add('opacity-75', 'cursor-not-allowed');
+                            this.showToast('✅ Đã tham gia nhóm thành công!', 'success');
+                        }
+                    }
+                });
+            }
+
+            setupKeyboardShortcuts() {
+                document.addEventListener('keydown', (e) => {
+                    // Ctrl/Cmd + D for dark mode
+                    if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+                        e.preventDefault();
+                        document.getElementById('darkModeToggle')?.click();
+                    }
+                    
+                    // Ctrl/Cmd + N for notifications
+                    if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
+                        e.preventDefault();
+                        document.getElementById('notificationBtn')?.click();
+                    }
+
+                    // Ctrl/Cmd + S for share
+                    if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                        e.preventDefault();
+                        document.getElementById('shareProfileBtn')?.click();
+                    }
+
+                    // Escape to close modals
+                    if (e.key === 'Escape') {
+                        this.hideAllModals();
+                    }
+                    
+                    // Number keys for tabs
+                    if (e.key >= '1' && e.key <= '4') {
+                        const tabIndex = parseInt(e.key) - 1;
+                        const tabs = ['dashboard', 'activities', 'skills', 'achievements'];
+                        const tabBtn = document.querySelector(`[data-tab="${tabs[tabIndex]}"]`);
+                        tabBtn?.click();
+                    }
+                });
+            }
+
+            setupAnimations() {
+                // Enhanced Intersection Observer for skill bars
+                const skillObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            this.animateSkillBar(entry.target);
+                        }
+                    });
+                }, { threshold: 0.3 });
+
+                document.querySelectorAll('.skill-progress').forEach(bar => {
+                    skillObserver.observe(bar);
+                });
+
+                // Enhanced hover effects for interactive cards
+                document.querySelectorAll('.interactive-card').forEach(card => {
+                    card.addEventListener('mouseenter', () => {
+                        card.style.transform = 'translateY(-8px) scale(1.03)';
+                    });
+                    
+                    card.addEventListener('mouseleave', () => {
+                        card.style.transform = 'translateY(0) scale(1)';
+                    });
+                });
+            }
+
+            animateSkillBars() {
+                document.querySelectorAll('.skill-progress').forEach(bar => {
+                    this.animateSkillBar(bar);
+                });
+            }
+
+            animateSkillBar(bar) {
+                const width = bar.getAttribute('data-width') || bar.style.width.replace('%', '');
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width + '%';
+                }, 300);
+            }
+
+            initActivityChart() {
+                const ctx = document.getElementById('activityChart')?.getContext('2d');
+                if (ctx && !ctx.chart) {
+                    ctx.chart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'Chủ nhật'],
+                            datasets: [{
+                                label: 'Hoạt động',
+                                data: [12, 19, 8, 15, 12, 18, 25],
+                                borderColor: 'rgb(59, 130, 246)',
+                                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                                tension: 0.5,
+                                fill: true,
+                                pointBackgroundColor: 'rgb(59, 130, 246)',
+                                pointBorderColor: '#ffffff',
+                                pointBorderWidth: 3,
+                                pointRadius: 8,
+                                pointHoverRadius: 12
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: { 
+                                legend: { display: false }
+                            },
+                            scales: {
+                                y: { 
+                                    beginAtZero: true, 
+                                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                                    ticks: { color: 'rgba(255, 255, 255, 0.8)' }
+                                },
+                                x: { 
+                                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                                    ticks: { color: 'rgba(255, 255, 255, 0.8)' }
+                                }
+                            },
+                            animation: {
+                                duration: 3000,
+                                easing: 'easeInOutCubic'
+                            }
+                        }
+                    });
+                }
+            }
+
+            animateCounters() {
+                document.querySelectorAll('.counter').forEach(counter => {
+                    const target = parseInt(counter.getAttribute('data-target'));
+                    let current = 0;
+                    const increment = target / 50;
+                    
+                    const timer = setInterval(() => {
+                        current += increment;
+                        counter.textContent = Math.floor(current);
+                        
+                        if (current >= target) {
+                            counter.textContent = target;
+                            clearInterval(timer);
+                        }
+                    }, 40);
+                });
+            }
+
+            showToast(message, type = 'info') {
+                const toast = document.createElement('div');
+                toast.className = `toast glass-morphism rounded-xl p-4 shadow-2xl ${
+                    type === 'success' ? 'border-l-4 border-green-400' :
+                    type === 'error' ? 'border-l-4 border-red-400' :
+                    type === 'warning' ? 'border-l-4 border-yellow-400' :
+                    'border-l-4 border-blue-400'
+                }`;
+                
+                const icon = type === 'success' ? 'fa-check-circle text-green-400' :
+                            type === 'error' ? 'fa-exclamation-circle text-red-400' :
+                            type === 'warning' ? 'fa-exclamation-triangle text-yellow-400' :
+                            'fa-info-circle text-blue-400';
+                
+                toast.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <i class="fas ${icon} text-xl"></i>
+                        <span class="text-white font-medium">${message}</span>
+                        <button onclick="this.parentElement.parentElement.remove()" class="text-white/70 hover:text-white hover:scale-110 transition-all duration-300 ml-4">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+                
+                document.getElementById('toastContainer')?.appendChild(toast);
+                
+                // Show animation
+                setTimeout(() => {
+                    toast.classList.add('show');
+                }, 100);
+                
+                // Auto remove
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => toast.remove(), 400);
+                }, 5000);
+            }
+
+            showLoadingOverlay() {
+                document.getElementById('loadingOverlay')?.classList.remove('hidden');
+            }
+
+            hideLoadingOverlay() {
+                document.getElementById('loadingOverlay')?.classList.add('hidden');
+            }
+        }
+
+        // Initialize dashboard when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new MemberDashboard();
+        });
+
+        // Service Worker for better performance (optional)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => console.log('SW registered'))
+                    .catch(error => console.log('SW registration failed'));
+            });
+        }
+    </script>
+</body>
+</html>
